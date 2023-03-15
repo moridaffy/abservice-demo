@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "update_date": 1678549063,
+  "collections": [
+    {
+      "name": "Main",
+      "toggles": [
+        {
+          "key": "ab_main_background_color",
+          "value": "a87f32"
+        },
+        {
+          "key": "ab_main_show_logo",
+          "value": true
+        },
+        {
+          "key": "ab_sample_condition_toggle",
+          "pre_condition_value": true,
+          "after_condition_value": false,
+          "conditions": [
+            {
+              "key": "min_launch_count",
+              "value": 5
+            },
+            {
+              "key": "max_launch_count",
+              "value": 10
+            }
+          ]
+        }
+        {
+          "key": "ab_main_text",
+          "value": {
+            "title": "hello!",
+            "subtitle": "goodbye",
+            "text_color": "ffffff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Common",
+      "toggles": [
+        {
+          "key": "ab_badge_count",
+          "value": 5,
+          "description": "badge value to be permanently presented on app's icon"
+        }
+      ]
+    }
+  ]
+}
