@@ -29,6 +29,7 @@
 		0CB64E0929C19D1B00152F35 /* ToggleEdit.Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64E0829C19D1B00152F35 /* ToggleEdit.Controller.swift */; };
 		0CB64E0B29C19D4500152F35 /* ToggleEdit.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64E0A29C19D4500152F35 /* ToggleEdit.Model.swift */; };
 		0CB64E0F29C1B03B00152F35 /* ABConditionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64E0E29C1B03B00152F35 /* ABConditionKey.swift */; };
+		0CFC29BF29CB53C000E40065 /* AnyObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC29BE29CB53C000E40065 /* AnyObserver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		0CB64E0829C19D1B00152F35 /* ToggleEdit.Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleEdit.Controller.swift; sourceTree = "<group>"; };
 		0CB64E0A29C19D4500152F35 /* ToggleEdit.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleEdit.Model.swift; sourceTree = "<group>"; };
 		0CB64E0E29C1B03B00152F35 /* ABConditionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABConditionKey.swift; sourceTree = "<group>"; };
+		0CFC29BE29CB53C000E40065 /* AnyObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObserver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				0C81460329BD032A00BAA3E5 /* ConstantHelper.swift */,
+				0CFC29BE29CB53C000E40065 /* AnyObserver.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				0C8145FC29BCEB6300BAA3E5 /* APIService.swift in Sources */,
 				0CB64E0929C19D1B00152F35 /* ToggleEdit.Controller.swift in Sources */,
 				0C8145DC29BCD9BC00BAA3E5 /* ABTestingService.swift in Sources */,
+				0CFC29BF29CB53C000E40065 /* AnyObserver.swift in Sources */,
 				0C8145E329BCDB6700BAA3E5 /* ABMainTextConfig.swift in Sources */,
 				0C8145DE29BCDA1C00BAA3E5 /* ABValueKey.swift in Sources */,
 			);

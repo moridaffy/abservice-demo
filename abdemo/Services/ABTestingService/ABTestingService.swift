@@ -7,6 +7,9 @@ protocol IABTestingService: AnyObject {
   func configure()
   func reset()
 
+  func addObserver(_ observer: IABTestingServiceObserver)
+  func removeObserver(_ observer: IABTestingServiceObserver)
+
   func setOverriddenToggle(_ toggle: ABConfig.Toggle)
 
   func getStringValue(forKey key: ABValueKey) -> String?
@@ -17,6 +20,10 @@ protocol IABTestingService: AnyObject {
   func getReadableValue(for toggle: ABConfig.Toggle) -> String?
 }
 
+protocol IABTestingServiceObserver: Observer {
+  func didChangeConfig(_ service: IABTestingService)
+}
+
 class ABTestingService: IABTestingService {
   private enum Keys: String {
     case cachedConfigKey = "ab_cached_config"
@@ -25,6 +32,7 @@ class ABTestingService: IABTestingService {
   }
 
   private var isConfigured: Bool = false
+  private var observers: [AnyObserver] = []
 
   private let userDefaults: UserDefaults
   private lazy var decoder = JSONDecoder()
@@ -50,6 +58,7 @@ class ABTestingService: IABTestingService {
       }
       userDefaults.set(data, forKey: Keys.cachedOverriddenConfigKey.rawValue)
       userDefaults.synchronize()
+      notifyObservers()
     }
   }
 
@@ -57,6 +66,7 @@ class ABTestingService: IABTestingService {
     didSet {
       userDefaults.set(isOverridingEnabled, forKey: Keys.overridingEnabled.rawValue)
       userDefaults.synchronize()
+      notifyObservers()
     }
   }
 
@@ -82,6 +92,17 @@ class ABTestingService: IABTestingService {
 
   func reset() {
     overriddenConfig = .empty
+  }
+
+  func addObserver(_ observer: IABTestingServiceObserver) {
+    if self.observers.contains(where: { $0.observer === observer }) { return }
+    observer.didChangeConfig(self)
+    self.observers.append(.init(observer))
+  }
+
+  func removeObserver(_ observer: IABTestingServiceObserver) {
+    guard let index = self.observers.firstIndex(where: { $0.observer === observer }) else { return }
+    self.observers.remove(at: index)
   }
 
   func setOverriddenToggle(_ toggle: ABConfig.Toggle) {
@@ -257,5 +278,13 @@ private extension ABTestingService {
     }
 
     return ABConditionResolver.resolve(conditions) ? afterConditionValue : preConditionValue
+  }
+
+  func notifyObservers() {
+    self.observers.forEach { observer in
+      if let observer = observer.observer as? IABTestingServiceObserver {
+        observer.didChangeConfig(self)
+      }
+    }
   }
 }

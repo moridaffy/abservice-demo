@@ -43,12 +43,12 @@ extension MainView {
 
       setupLayout()
       setupActions()
+
+      ABTestingService.shared.addObserver(self)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-      super.viewWillAppear(animated)
-
-      setupAppearance()
+    deinit {
+      ABTestingService.shared.removeObserver(self)
     }
   }
 }
@@ -83,17 +83,24 @@ private extension MainView.Controller {
     debugMenuButton.addTarget(self, action: #selector(debugMenuButtonTapped), for: .touchUpInside)
   }
 
-  func setupAppearance() {
-    if let backgroundColorCode = ABTestingService.shared.getStringValue(forKey: .mainBackgroundColor),
+  @objc func debugMenuButtonTapped() {
+    let debugViewController = DebugView.build()
+    navigationController?.pushViewController(debugViewController, animated: true)
+  }
+}
+
+extension MainView.Controller: IABTestingServiceObserver {
+  func didChangeConfig(_ service: IABTestingService) {
+    if let backgroundColorCode = service.getStringValue(forKey: .mainBackgroundColor),
        let backgroundColor = UIColor(hex: backgroundColorCode) {
       view.backgroundColor = backgroundColor
     }
 
-    if let showLogo = ABTestingService.shared.getBoolValue(forKey: .mainShowLogo) {
+    if let showLogo = service.getBoolValue(forKey: .mainShowLogo) {
       logoImageView.isHidden = !showLogo
     }
 
-    if let textConfig = ABTestingService.shared.getDecodableValue(forKey: .mainText, type: ABMainTextConfig.self) {
+    if let textConfig = service.getDecodableValue(forKey: .mainText, type: ABMainTextConfig.self) {
       titleLabel.text = textConfig.title
       subtitleLabel.text = textConfig.subtitle
 
@@ -102,10 +109,5 @@ private extension MainView.Controller {
         subtitleLabel.textColor = color
       }
     }
-  }
-
-  @objc func debugMenuButtonTapped() {
-    let debugViewController = DebugView.build()
-    navigationController?.pushViewController(debugViewController, animated: true)
   }
 }
