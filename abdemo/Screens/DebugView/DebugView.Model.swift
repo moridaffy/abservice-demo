@@ -4,7 +4,7 @@ extension DebugView {
   class Model {
     let abTestingService: IABTestingService
 
-    private(set) var cellModels: [[ToggleCell.Model]] = [[]] {
+    private(set) var cellModels: [[FlagCell.Model]] = [[]] {
       didSet {
         view?.reloadTableView()
       }
@@ -22,15 +22,15 @@ extension DebugView {
       abTestingService.reset()
     }
 
-    func saveBoolValue(_ value: Bool, for toggle: ABConfig.Toggle) {
-      overrideToggle(value: value, toggle: toggle)
+    func saveBoolValue(_ value: Bool, for flag: ABConfig.Flag) {
+      overrideFlag(value: value, flag: flag)
     }
 
-    func saveStringValue(_ value: String?, for toggle: ABConfig.Toggle) {
-      overrideToggle(value: value?.nilIfEmpty, toggle: toggle)
+    func saveStringValue(_ value: String?, for flag: ABConfig.Flag) {
+      overrideFlag(value: value?.nilIfEmpty, flag: flag)
     }
 
-    func saveIntValue(_ value: String?, for toggle: ABConfig.Toggle) {
+    func saveIntValue(_ value: String?, for flag: ABConfig.Flag) {
       var intValue: Int?
       if value?.nilIfEmpty == nil {
         intValue = nil
@@ -42,23 +42,23 @@ extension DebugView {
         intValue = value
       }
 
-      overrideToggle(value: intValue, toggle: toggle)
+      overrideFlag(value: intValue, flag: flag)
     }
 
-    func getReadableValue(for toggle: ABConfig.Toggle) -> String? {
-      abTestingService.getReadableValue(for: toggle)
+    func getReadableValue(for flag: ABConfig.Flag) -> String? {
+      abTestingService.getReadableValue(for: flag)
     }
   }
 }
 
 private extension DebugView.Model {
-  func overrideToggle(value: Any?, toggle: ABConfig.Toggle) {
-    if toggle.key == ABValueKey.overridingEnabled.rawValue {
+  func overrideFlag(value: Any?, flag: ABConfig.Flag) {
+    if flag.key == ABValueKey.overridingEnabled.rawValue {
       abTestingService.isOverridingEnabled = value as? Bool ?? false
     } else {
-      let newToggle = toggle.copy
-      newToggle.value = value
-      abTestingService.setOverriddenToggle(newToggle)
+      let newFlag = flag.copy
+      newFlag.value = value
+      abTestingService.setOverriddenFlag(newFlag)
     }
 
     reloadCellModels()
@@ -70,10 +70,10 @@ private extension DebugView.Model {
       return
     }
 
-    func getValueViewType(for toggle: ABConfig.Toggle) -> DebugView.ToggleCell.ValueViewType {
-      switch toggle.valueKey?.valueType {
+    func getValueViewType(for flag: ABConfig.Flag) -> DebugView.FlagCell.ValueViewType {
+      switch flag.valueKey?.valueType {
       case .string, .int, .bool:
-        return .value(getReadableValue(for: toggle))
+        return .value(getReadableValue(for: flag))
 
       case .model:
         return .info
@@ -83,19 +83,19 @@ private extension DebugView.Model {
       }
     }
 
-    let overridingToggle = ABConfig.Toggle(key: ABValueKey.overridingEnabled.rawValue,
+    let overridingFlag = ABConfig.Flag(key: ABValueKey.overridingEnabled.rawValue,
                                                       description: "Is overriding enabled",
                                                       value: abTestingService.isOverridingEnabled)
-    var cellModels: [[DebugView.ToggleCell.Model]] = [
+    var cellModels: [[DebugView.FlagCell.Model]] = [
       [
-        .init(toggle: overridingToggle, valueViewType: getValueViewType(for: overridingToggle))
+        .init(flag: overridingFlag, valueViewType: getValueViewType(for: overridingFlag))
       ]
     ]
 
     for collection in localConfig.collections {
-      var models: [DebugView.ToggleCell.Model] = []
-      for toggle in collection.toggles {
-        models.append(.init(toggle: toggle, valueViewType: getValueViewType(for: toggle)))
+      var models: [DebugView.FlagCell.Model] = []
+      for flag in collection.flags {
+        models.append(.init(flag: flag, valueViewType: getValueViewType(for: flag)))
       }
       cellModels.append(models)
     }

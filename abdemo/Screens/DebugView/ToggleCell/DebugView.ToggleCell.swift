@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 extension DebugView {
-  class ToggleCell: UITableViewCell {
+  class FlagCell: UITableViewCell {
     private let titleLabel: UILabel = {
       let label = UILabel()
       label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ extension DebugView {
       fatalError("init(coder:) has not been implemented")
     }
 
-    func update(model: DebugView.ToggleCell.Model) {
+    func update(model: DebugView.FlagCell.Model) {
       titleLabel.text = model.title
       subtitleLabel.text = model.subtitle
 
@@ -60,7 +60,7 @@ extension DebugView {
   }
 }
 
-private extension DebugView.ToggleCell {
+private extension DebugView.FlagCell {
   func setupLayout() {
     contentView.addSubview(titleLabel)
     contentView.addSubview(subtitleLabel)
@@ -84,7 +84,7 @@ private extension DebugView.ToggleCell {
   }
 }
 
-extension DebugView.ToggleCell {
+extension DebugView.FlagCell {
   enum ValueViewType {
     case value(String?)
     case info
@@ -92,19 +92,19 @@ extension DebugView.ToggleCell {
   }
 }
 
-extension DebugView.ToggleCell {
+extension DebugView.FlagCell {
   struct Model {
-    let toggle: ABConfig.Toggle
+    let flag: ABConfig.Flag
 
     let title: String
     let subtitle: String?
     let valueViewType: ValueViewType
 
-    init(toggle: ABConfig.Toggle, valueViewType: ValueViewType) {
-      self.toggle = toggle
+    init(flag: ABConfig.Flag, valueViewType: ValueViewType) {
+      self.flag = flag
 
-      self.title = toggle.key
-      self.subtitle = toggle.description
+      self.title = flag.key
+      self.subtitle = flag.description
       self.valueViewType = valueViewType
     }
   }

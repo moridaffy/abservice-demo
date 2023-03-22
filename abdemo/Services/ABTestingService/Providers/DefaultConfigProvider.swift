@@ -31,7 +31,7 @@ extension DefaultConfigProvider: IABConfigProvider {
 
   func getValue(for key: ABValueKey) -> Any? {
     config?.collections
-      .flatMap { $0.toggles }
+      .flatMap { $0.flags }
       .first(where: { $0.key == key.rawValue })?
       .value
   }

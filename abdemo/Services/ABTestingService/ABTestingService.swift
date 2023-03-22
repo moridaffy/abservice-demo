@@ -10,14 +10,14 @@ protocol IABTestingService: AnyObject {
   func addObserver(_ observer: IABTestingServiceObserver)
   func removeObserver(_ observer: IABTestingServiceObserver)
 
-  func setOverriddenToggle(_ toggle: ABConfig.Toggle)
+  func setOverriddenFlag(_ flag: ABConfig.Flag)
 
   func getStringValue(forKey key: ABValueKey) -> String?
   func getIntValue(forKey key: ABValueKey) -> Int?
   func getBoolValue(forKey key: ABValueKey) -> Bool?
   func getDecodableValue<T: Decodable>(forKey key: ABValueKey, type: T.Type) -> T?
 
-  func getReadableValue(for toggle: ABConfig.Toggle) -> String?
+  func getReadableValue(for flag: ABConfig.Flag) -> String?
 }
 
 protocol IABTestingServiceObserver: Observer {
@@ -117,8 +117,8 @@ class ABTestingService: IABTestingService {
     self.observers.remove(at: index)
   }
 
-  func setOverriddenToggle(_ toggle: ABConfig.Toggle) {
-    overriddenProvider?.setOverriddenToggle(toggle)
+  func setOverriddenFlag(_ flag: ABConfig.Flag) {
+    overriddenProvider?.setOverriddenFlag(flag)
     notifyObservers()
   }
 
@@ -155,8 +155,8 @@ class ABTestingService: IABTestingService {
     return getValue(forKey: key) as? T
   }
 
-  func getReadableValue(for toggle: ABConfig.Toggle) -> String? {
-    guard let valueKey = toggle.valueKey else {
+  func getReadableValue(for flag: ABConfig.Flag) -> String? {
+    guard let valueKey = flag.valueKey else {
       assertionFailure()
       return nil
     }

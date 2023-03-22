@@ -6,7 +6,7 @@ extension DebugView {
     private let tableView: UITableView = {
       let tableView = UITableView(frame: .zero, style: .insetGrouped)
       tableView.translatesAutoresizingMaskIntoConstraints = false
-      tableView.register(DebugView.ToggleCell.self, forCellReuseIdentifier: "cell")
+      tableView.register(DebugView.FlagCell.self, forCellReuseIdentifier: "cell")
       return tableView
     }()
 
@@ -73,40 +73,40 @@ private extension DebugView.Controller {
     tableView.contentInset = view.safeAreaInsets
   }
 
-  func handleToggleTap(_ toggle: ABConfig.Toggle) {
-    guard let valueType = toggle.valueKey?.valueType else { return }
+  func handleFlagTap(_ flag: ABConfig.Flag) {
+    guard let valueType = flag.valueKey?.valueType else { return }
 
     if case .model = valueType {
-      let toggleEdit = ToggleEdit.build(toggle: toggle)
-      navigationController?.pushViewController(toggleEdit, animated: true)
+      let flagEdit = FlagEdit.build(flag: flag)
+      navigationController?.pushViewController(flagEdit, animated: true)
       return
     }
 
-    let alert = UIAlertController(title: "Edit value", message: toggle.key, preferredStyle: .alert)
+    let alert = UIAlertController(title: "Edit value", message: flag.key, preferredStyle: .alert)
     alert.addAction(.init(title: "Cancel", style: .cancel))
 
     switch valueType {
     case .string, .int:
       alert.addTextField { textField in
         textField.placeholder = "value"
-        textField.text = self.viewModel.getReadableValue(for: toggle)
+        textField.text = self.viewModel.getReadableValue(for: flag)
         textField.keyboardType = valueType == .string ? .default : .numberPad
       }
       alert.addAction(.init(title: "Save", style: .default, handler: { _ in
         let newValue = alert.textFields?.first?.text
         if valueType == .string {
-          self.viewModel.saveStringValue(newValue, for: toggle)
+          self.viewModel.saveStringValue(newValue, for: flag)
         } else {
-          self.viewModel.saveIntValue(newValue, for: toggle)
+          self.viewModel.saveIntValue(newValue, for: flag)
         }
       }))
 
     case .bool:
       alert.addAction(.init(title: "True", style: .default, handler: { _ in
-        self.viewModel.saveBoolValue(true, for: toggle)
+        self.viewModel.saveBoolValue(true, for: flag)
       }))
       alert.addAction(.init(title: "False", style: .default, handler: { _ in
-        self.viewModel.saveBoolValue(false, for: toggle)
+        self.viewModel.saveBoolValue(false, for: flag)
       }))
 
     default:
@@ -134,7 +134,7 @@ extension DebugView.Controller: UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
 
-    handleToggleTap(viewModel.cellModels[indexPath.section][indexPath.row].toggle)
+    handleFlagTap(viewModel.cellModels[indexPath.section][indexPath.row].flag)
   }
 }
 
@@ -155,7 +155,7 @@ extension DebugView.Controller: UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? DebugView.ToggleCell else {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? DebugView.FlagCell else {
       assertionFailure()
       return UITableViewCell()
     }

@@ -31,19 +31,19 @@ extension ABConfig {
 extension ABConfig {
   class Collection: Codable {
     let name: String
-    var toggles: [Toggle]
+    var flags: [Flag]
 
-    init(name: String, toggles: [Toggle] = []) {
+    init(name: String, flags: [Flag] = []) {
       self.name = name
-      self.toggles = toggles
+      self.flags = flags
     }
   }
 }
 
-// MARK: - Toggle
+// MARK: - Flag
 
 extension ABConfig {
-  class Toggle: Codable {
+  class Flag: Codable {
     let key: String
     let description: String?
     var value: Any?
@@ -144,7 +144,7 @@ extension ABConfig {
       }
     }
 
-    var copy: Toggle {
+    var copy: Flag {
       .init(key: key, description: description, value: value)
     }
   }

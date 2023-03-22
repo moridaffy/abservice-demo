@@ -33,15 +33,15 @@ extension RemoteConfigProvider: IABConfigProvider {
   }
 
   func getValue(for key: ABValueKey) -> Any? {
-    let toggle = config?.collections
-      .flatMap { $0.toggles }
+    let flag = config?.collections
+      .flatMap { $0.flags }
       .first(where: { $0.key == key.rawValue })
-    guard let toggle = toggle else { return nil }
+    guard let flag = flag else { return nil }
 
-    if let conditions = toggle.conditions {
-      return ABConditionResolver.resolve(conditions) ? toggle.preConditionValue : toggle.afterConditionValue
+    if let conditions = flag.conditions {
+      return ABConditionResolver.resolve(conditions) ? flag.preConditionValue : flag.afterConditionValue
     } else {
-      return toggle.value
+      return flag.value
     }
   }
 }

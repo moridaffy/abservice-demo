@@ -15,17 +15,17 @@ class OverriddenConfigProvider {
     self.abTestingService = abTestingService
   }
 
-  func setOverriddenToggle(_ toggle: ABConfig.Toggle) {
+  func setOverriddenFlag(_ flag: ABConfig.Flag) {
     guard let config = config else {
       assertionFailure()
       return
     }
 
     let collection = config.collections.first ?? .init(name: "Overridden")
-    if let index = collection.toggles.firstIndex(where: { $0.key == toggle.key }) {
-      collection.toggles[index] = toggle
+    if let index = collection.flags.firstIndex(where: { $0.key == flag.key }) {
+      collection.flags[index] = flag
     } else {
-      collection.toggles.append(toggle)
+      collection.flags.append(flag)
     }
 
     config.collections = [collection]
@@ -48,7 +48,7 @@ extension OverriddenConfigProvider: IABConfigProvider {
     guard abTestingService?.isOverridingEnabled == true else { return nil }
 
     return config?.collections
-      .flatMap { $0.toggles }
+      .flatMap { $0.flags }
       .first(where: { $0.key == key.rawValue })?
       .value
   }

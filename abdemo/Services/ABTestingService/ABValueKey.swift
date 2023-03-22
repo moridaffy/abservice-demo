@@ -9,7 +9,7 @@ enum ABValueKey: String {
 
   case badgeCount           = "ab_badge_count"
 
-  case sampleCondition      = "ab_sample_condition_toggle"
+  case sampleCondition      = "ab_sample_condition_flag"
 
   var valueType: ABValueType {
     switch self {

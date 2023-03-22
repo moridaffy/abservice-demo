@@ -4,7 +4,7 @@
   "collections": [
     {
       "name": "Main",
-      "toggles": [
+      "flags": [
         {
           "key": "ab_main_background_color",
           "value": "a87f32"
@@ -14,7 +14,7 @@
           "value": true
         },
         {
-          "key": "ab_sample_condition_toggle",
+          "key": "ab_sample_condition_flag",
           "pre_condition_value": true,
           "after_condition_value": false,
           "conditions": [
@@ -40,7 +40,7 @@
     },
     {
       "name": "Common",
-      "toggles": [
+      "flags": [
         {
           "key": "ab_badge_count",
           "value": 5,

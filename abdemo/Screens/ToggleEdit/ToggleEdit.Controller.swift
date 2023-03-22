@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension ToggleEdit {
+extension FlagEdit {
   class Controller: UIViewController {
     private let textView: UITextView = {
       let textView = UITextView()
@@ -50,7 +50,7 @@ extension ToggleEdit {
   }
 }
 
-private extension ToggleEdit.Controller {
+private extension FlagEdit.Controller {
   func setupLayout() {
     view.addSubview(textView)
 
@@ -68,7 +68,7 @@ private extension ToggleEdit.Controller {
   }
 
   func setupNavigationBar() {
-    title = viewModel.toggle.key
+    title = viewModel.flag.key
 
     if navigationItem.rightBarButtonItem == nil {
       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonTapped))
@@ -93,7 +93,7 @@ private extension ToggleEdit.Controller {
       return
     }
 
-    let alertController = UIAlertController(title: "Error", message: "Failed to update toggle, probably entered JSON is not valid", preferredStyle: .alert)
+    let alertController = UIAlertController(title: "Error", message: "Failed to update flag, probably entered JSON is not valid", preferredStyle: .alert)
     alertController.addAction(.init(title: "OK", style: .default))
     present(alertController, animated: true)
   }

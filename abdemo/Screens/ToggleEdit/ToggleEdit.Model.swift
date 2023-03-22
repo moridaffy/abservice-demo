@@ -1,25 +1,25 @@
 import Foundation
 
-extension ToggleEdit {
+extension FlagEdit {
   class Model {
     private let abTestingService: IABTestingService
 
     private lazy var decoder = JSONDecoder()
 
-    let toggle: ABConfig.Toggle
+    let flag: ABConfig.Flag
 
-    init(abTestingService: IABTestingService, toggle: ABConfig.Toggle) {
+    init(abTestingService: IABTestingService, flag: ABConfig.Flag) {
       self.abTestingService = abTestingService
 
-      self.toggle = toggle
+      self.flag = flag
     }
 
     func getReadableValue() -> String? {
-      abTestingService.getReadableValue(for: toggle)
+      abTestingService.getReadableValue(for: flag)
     }
 
     func saveChanges(_ value: String) -> Bool {
-      guard case let .model(type) = toggle.valueKey?.valueType else {
+      guard case let .model(type) = flag.valueKey?.valueType else {
         assertionFailure()
         return false
       }
@@ -30,9 +30,9 @@ extension ToggleEdit {
         return false
       }
 
-      let newToggle = toggle.copy
-      newToggle.value = model
-      abTestingService.setOverriddenToggle(newToggle)
+      let newFlag = flag.copy
+      newFlag.value = model
+      abTestingService.setOverriddenFlag(newFlag)
 
       return true
     }
