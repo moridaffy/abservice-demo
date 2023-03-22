@@ -25,73 +25,85 @@ protocol IABTestingServiceObserver: Observer {
 }
 
 class ABTestingService: IABTestingService {
-  private enum Keys: String {
-    case cachedConfigKey = "ab_cached_config"
-    case cachedOverriddenConfigKey = "ab_cached_overridden_config"
-    case overridingEnabled = "ab_overriding_enabled"
+  private enum Keys {
+    static let overridingEnabled: String = "ab_overriding_enabled"
   }
+
+  private let configStorage: ABConfigStorage
 
   private var isConfigured: Bool = false
+  private var providers: [IABConfigProvider] = []
   private var observers: [AnyObserver] = []
 
-  private let userDefaults: UserDefaults
-  private lazy var decoder = JSONDecoder()
-  private lazy var encoder = JSONEncoder()
-
-  private(set) var localConfig: ABConfig? {
-    didSet {
-      guard let config = localConfig,
-            let data = try? encoder.encode(config) else {
-        assertionFailure()
-        return
+  private var overriddenProvider: OverriddenConfigProvider? {
+    for provider in providers {
+      if let provider = provider as? OverriddenConfigProvider {
+        return provider
       }
-      userDefaults.set(data, forKey: Keys.cachedConfigKey.rawValue)
-      userDefaults.synchronize()
     }
+    return nil
   }
-  private var overriddenConfig: ABConfig? {
-    didSet {
-      guard let config = overriddenConfig,
-            let data = try? encoder.encode(config) else {
-        assertionFailure()
-        return
+
+  var localConfig: ABConfig? {
+    for provider in providers {
+      if let provider = provider as? DefaultConfigProvider {
+        return provider.config
       }
-      userDefaults.set(data, forKey: Keys.cachedOverriddenConfigKey.rawValue)
-      userDefaults.synchronize()
-      notifyObservers()
     }
+    return nil
   }
 
   var isOverridingEnabled: Bool {
     didSet {
-      userDefaults.set(isOverridingEnabled, forKey: Keys.overridingEnabled.rawValue)
-      userDefaults.synchronize()
+      configStorage.userDefaults.set(isOverridingEnabled, forKey: Keys.overridingEnabled)
+      configStorage.userDefaults.synchronize()
       notifyObservers()
     }
   }
 
   static let shared = ABTestingService()
 
-  private init(userDefaults: UserDefaults = .standard) {
-    self.userDefaults = userDefaults
+  private init(userDefaults: UserDefaults = .standard,
+               encoder: JSONEncoder = JSONEncoder(),
+               decoder: JSONDecoder = JSONDecoder()) {
+    self.configStorage = ABConfigStorage(userDefaults: userDefaults,
+                                         encoder: encoder,
+                                         decoder: decoder)
 
     if ConstantHelper.buildType == .appStore {
       self.isOverridingEnabled = false
     } else {
-      self.isOverridingEnabled = userDefaults.object(forKey: Keys.overridingEnabled.rawValue) as? Bool ?? false
+      self.isOverridingEnabled = userDefaults.object(forKey: Keys.overridingEnabled) as? Bool ?? false
     }
   }
 
   func configure() {
     if isConfigured { return }
 
-    getLocalConfig()
+    providers = [
+      OverriddenConfigProvider(storage: self.configStorage, abTestingService: self),
+      RemoteConfigProvider(apiService: .shared, storage: self.configStorage),
+      DefaultConfigProvider(decoder: self.configStorage.decoder)
+    ]
+      .sorted(by: { $0.priority > $1.priority })
 
-    isConfigured = true
+    let group = DispatchGroup()
+    group.notify(queue: .main) {
+      self.isConfigured = true
+      self.notifyObservers()
+    }
+
+    for provider in providers {
+      group.enter()
+
+      provider.fetchConfig { _ in
+        group.leave()
+      }
+    }
   }
 
   func reset() {
-    overriddenConfig = .empty
+    providers.forEach { $0.reset() }
   }
 
   func addObserver(_ observer: IABTestingServiceObserver) {
@@ -106,30 +118,8 @@ class ABTestingService: IABTestingService {
   }
 
   func setOverriddenToggle(_ toggle: ABConfig.Toggle) {
-    guard let localConfig = localConfig,
-          let overriddenConfig = overriddenConfig,
-          let collection = localConfig.collections.first(where: { collection in
-            collection.toggles.contains(where: { $0.key == toggle.key })
-          }) else {
-      assertionFailure()
-      return
-    }
-
-    if !overriddenConfig.collections.contains(where: { $0.name == collection.name }) {
-      overriddenConfig.collections.append(.init(name: collection.name))
-    }
-    guard let overriddenCollectionIndex = overriddenConfig.collections.firstIndex(where: { $0.name == collection.name }) else {
-      assertionFailure()
-      return
-    }
-
-    if let overriddenToggleIndex = overriddenConfig.collections[overriddenCollectionIndex].toggles.firstIndex(where: { $0.key == toggle.key }) {
-      overriddenConfig.collections[overriddenCollectionIndex].toggles[overriddenToggleIndex] = toggle
-    } else {
-      overriddenConfig.collections[overriddenCollectionIndex].toggles.append(toggle)
-    }
-
-    self.overriddenConfig = overriddenConfig
+    overriddenProvider?.setOverriddenToggle(toggle)
+    notifyObservers()
   }
 
   func getStringValue(forKey key: ABValueKey) -> String? {
@@ -214,70 +204,16 @@ class ABTestingService: IABTestingService {
 }
 
 private extension ABTestingService {
-  func getLocalConfig() {
-    if let data = userDefaults.object(forKey: Keys.cachedConfigKey.rawValue) as? Data,
-       let config = try? decoder.decode(ABConfig.self, from: data) {
-      self.localConfig = config
-    } else if let url = Bundle.main.url(forResource: "offline_config", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let config = try? decoder.decode(ABConfig.self, from: data) {
-      self.localConfig = config
-    } else {
-      assertionFailure("Failed to get any local config")
-    }
-
-    if let data = userDefaults.object(forKey: Keys.cachedOverriddenConfigKey.rawValue) as? Data {
-      do {
-        let config = try decoder.decode(ABConfig.self, from: data)
-        self.overriddenConfig = config
-      } catch let error {
-        self.overriddenConfig = .empty
-      }
-    }
-  }
-
-  func getRemoteConfig(completionHandler: () -> Void) {
-    APIService.shared.fetchConfig { [weak self] config in
-      guard let self = self else { return }
-
-      guard let config = config else {
-        // TODO: log error while trying to fetch actual AB config
-        return
-      }
-
-      self.localConfig = config
-    }
-  }
-
   func getValue(forKey key: ABValueKey) -> Any? {
     guard isConfigured else { return nil }
 
-    return getOverriddenValue(for: key) ?? getConfigValue(for: key)
-  }
-
-  func getOverriddenValue(for key: ABValueKey) -> Any? {
-    guard isOverridingEnabled else { return nil }
-
-    return overriddenConfig?.collections
-      .flatMap { $0.toggles }
-      .first(where: { $0.key == key.rawValue })?
-      .value
-  }
-
-  func getConfigValue(for key: ABValueKey) -> Any? {
-    let toggle = localConfig?.collections
-      .flatMap { $0.toggles }
-      .first(where: { $0.key == key.rawValue })
-    guard let toggle = toggle else { return nil }
-
-    guard let conditions = toggle.conditions,
-          !conditions.isEmpty,
-          let preConditionValue = toggle.preConditionValue,
-          let afterConditionValue = toggle.afterConditionValue else {
-      return toggle.value
+    for provider in providers {
+      if let value = provider.getValue(for: key) {
+        return value
+      }
     }
 
-    return ABConditionResolver.resolve(conditions) ? afterConditionValue : preConditionValue
+    return nil
   }
 
   func notifyObservers() {
