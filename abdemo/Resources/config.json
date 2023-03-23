@@ -15,8 +15,8 @@
         },
         {
           "key": "ab_sample_condition_flag",
-          "pre_condition_value": true,
-          "after_condition_value": false,
+          "condition_true_value": true,
+          "condition_false_value": false,
           "conditions": [
             {
               "key": "min_launch_count",

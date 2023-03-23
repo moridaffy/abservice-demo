@@ -39,7 +39,7 @@ extension RemoteConfigProvider: IABConfigProvider {
     guard let flag = flag else { return nil }
 
     if let conditions = flag.conditions {
-      return ABConditionResolver.resolve(conditions) ? flag.preConditionValue : flag.afterConditionValue
+      return ABConditionResolver.resolve(conditions) ? flag.conditionTrueValue : flag.conditionFalseValue
     } else {
       return flag.value
     }

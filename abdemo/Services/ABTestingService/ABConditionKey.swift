@@ -3,12 +3,16 @@ import Foundation
 enum ABConditionKey: String {
   case minLaunchCount = "min_launch_count"
   case maxLaunchCount = "max_launch_count"
+  case isPro = "is_user_pro"
 
   var valueType: ABValueType {
     switch self {
     case .minLaunchCount,
         .maxLaunchCount:
       return .int
+
+    case .isPro:
+      return .bool
     }
   }
 }
@@ -50,6 +54,11 @@ enum ABConditionResolver {
       // TODO: calculate real app launch count
       let appLaunchCount = 5
       return appLaunchCount >= minLaunchCount
+
+    case .isPro:
+      // TODO: get real user status
+      let isUserPro = true
+      return isUserPro
     }
   }
 }

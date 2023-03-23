@@ -48,8 +48,8 @@ extension ABConfig {
     let description: String?
     var value: Any?
 
-    let preConditionValue: Any?
-    let afterConditionValue: Any?
+    let conditionTrueValue: Any?
+    let conditionFalseValue: Any?
     let conditions: [Condition]?
 
     var valueKey: ABValueKey? {
@@ -61,8 +61,8 @@ extension ABConfig {
       case description
       case value
 
-      case preConditionValue = "pre_condition_value"
-      case afterConditionValue = "after_condition_value"
+      case conditionTrueValue = "condition_true_value"
+      case conditionFalseValue = "condition_false_value"
       case conditions
     }
 
@@ -75,31 +75,31 @@ extension ABConfig {
 
       guard let valueType = ABValueKey(rawValue: key)?.valueType else {
         self.value = nil
-        self.preConditionValue = nil
-        self.afterConditionValue = nil
+        self.conditionTrueValue = nil
+        self.conditionFalseValue = nil
         return
       }
 
       switch valueType {
       case .string:
         self.value = try values.decodeIfPresent(String.self, forKey: .value)
-        self.preConditionValue = try values.decodeIfPresent(String.self, forKey: .preConditionValue)
-        self.afterConditionValue = try values.decodeIfPresent(String.self, forKey: .afterConditionValue)
+        self.conditionTrueValue = try values.decodeIfPresent(String.self, forKey: .conditionTrueValue)
+        self.conditionFalseValue = try values.decodeIfPresent(String.self, forKey: .conditionFalseValue)
 
       case .int:
         self.value = try values.decodeIfPresent(Int.self, forKey: .value)
-        self.preConditionValue = try values.decodeIfPresent(Int.self, forKey: .preConditionValue)
-        self.afterConditionValue = try values.decodeIfPresent(Int.self, forKey: .afterConditionValue)
+        self.conditionTrueValue = try values.decodeIfPresent(Int.self, forKey: .conditionTrueValue)
+        self.conditionFalseValue = try values.decodeIfPresent(Int.self, forKey: .conditionFalseValue)
 
       case .bool:
         self.value = try values.decodeIfPresent(Bool.self, forKey: .value)
-        self.preConditionValue = try values.decodeIfPresent(Bool.self, forKey: .preConditionValue)
-        self.afterConditionValue = try values.decodeIfPresent(Bool.self, forKey: .afterConditionValue)
+        self.conditionTrueValue = try values.decodeIfPresent(Bool.self, forKey: .conditionTrueValue)
+        self.conditionFalseValue = try values.decodeIfPresent(Bool.self, forKey: .conditionFalseValue)
 
       case let .model(type):
         self.value = try values.decodeIfPresent(type, forKey: .value)
-        self.preConditionValue = try values.decodeIfPresent(type, forKey: .preConditionValue)
-        self.afterConditionValue = try values.decodeIfPresent(type, forKey: .afterConditionValue)
+        self.conditionTrueValue = try values.decodeIfPresent(type, forKey: .conditionTrueValue)
+        self.conditionFalseValue = try values.decodeIfPresent(type, forKey: .conditionFalseValue)
       }
     }
 
@@ -108,8 +108,8 @@ extension ABConfig {
       self.description = description
       self.value = value
 
-      self.preConditionValue = nil
-      self.afterConditionValue = nil
+      self.conditionTrueValue = nil
+      self.conditionFalseValue = nil
       self.conditions = nil
     }
 
