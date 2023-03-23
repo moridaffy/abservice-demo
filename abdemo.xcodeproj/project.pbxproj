@@ -35,6 +35,7 @@
 		0CFC29C329CB88B900E40065 /* DefaultConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC29C229CB88B900E40065 /* DefaultConfigProvider.swift */; };
 		0CFC29C529CB8DA100E40065 /* OverridenConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC29C429CB8DA100E40065 /* OverridenConfigProvider.swift */; };
 		0CFC29C729CB932900E40065 /* ABConfigStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC29C629CB932900E40065 /* ABConfigStorage.swift */; };
+		0CFC29C929CC4D3B00E40065 /* ABMapLayersConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFC29C829CC4D3B00E40065 /* ABMapLayersConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		0CFC29C229CB88B900E40065 /* DefaultConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConfigProvider.swift; sourceTree = "<group>"; };
 		0CFC29C429CB8DA100E40065 /* OverridenConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridenConfigProvider.swift; sourceTree = "<group>"; };
 		0CFC29C629CB932900E40065 /* ABConfigStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABConfigStorage.swift; sourceTree = "<group>"; };
+		0CFC29C829CC4D3B00E40065 /* ABMapLayersConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABMapLayersConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				0C8145FD29BCEBE800BAA3E5 /* ABConfig.swift */,
 				0C8145E229BCDB6700BAA3E5 /* ABMainTextConfig.swift */,
+				0CFC29C829CC4D3B00E40065 /* ABMapLayersConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				0CFC29BF29CB53C000E40065 /* AnyObserver.swift in Sources */,
 				0C8145E329BCDB6700BAA3E5 /* ABMainTextConfig.swift in Sources */,
 				0C8145DE29BCDA1C00BAA3E5 /* ABValueKey.swift in Sources */,
+				0CFC29C929CC4D3B00E40065 /* ABMapLayersConfig.swift in Sources */,
 				0CFC29B729CB3CA400E40065 /* IABConfigProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

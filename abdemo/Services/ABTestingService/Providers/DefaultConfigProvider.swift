@@ -30,9 +30,15 @@ extension DefaultConfigProvider: IABConfigProvider {
   }
 
   func getValue(for key: ABValueKey) -> Any? {
-    config?.collections
+    let flag = config?.collections
       .flatMap { $0.flags }
-      .first(where: { $0.key == key.rawValue })?
-      .value
+      .first(where: { $0.key == key.rawValue })
+    guard let flag = flag else { return nil }
+
+    if let conditions = flag.conditions {
+      return ABConditionResolver.resolve(conditions) ? flag.conditionTrueValue : flag.conditionFalseValue
+    } else {
+      return flag.value
+    }
   }
 }

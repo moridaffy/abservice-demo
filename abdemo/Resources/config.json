@@ -47,6 +47,30 @@
           "description": "badge value to be permanently presented on app's icon"
         }
       ]
+    },
+    {
+      "name": "Map",
+      "flags": [
+        {
+          "key": "ab_map_layers",
+          "condition_true_value": {
+            "layers": [
+              "layer_regular",
+              "layer_pro"
+            ]
+          },
+          "condition_false_value": {
+            "layers": [
+              "layer_regular"
+            ]
+          },
+          "conditions": [
+            {
+              "key": "is_user_pro"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

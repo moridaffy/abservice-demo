@@ -11,6 +11,8 @@ enum ABValueKey: String {
 
   case sampleCondition      = "ab_sample_condition_flag"
 
+  case mapLayers            = "ab_map_layers"
+
   var valueType: ABValueType {
     switch self {
     case .mainBackgroundColor:
@@ -21,11 +23,14 @@ enum ABValueKey: String {
         .sampleCondition:
       return .bool
 
+    case .badgeCount:
+      return .int
+
     case .mainText:
       return .model(ABMainTextConfig.self)
 
-    case .badgeCount:
-      return .int
+    case .mapLayers:
+      return .model(ABMapLayersConfig.self)
     }
   }
 }
