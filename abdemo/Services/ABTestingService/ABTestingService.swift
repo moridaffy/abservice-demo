@@ -4,20 +4,21 @@ protocol IABTestingService: AnyObject {
   var isOverridingEnabled: Bool { get set }
   var localConfig: ABConfig? { get }
 
+  var abMainBackgroundColor: String? { get }
+  var abMainShowLogo: Bool? { get }
+  var abMainText: ABMainTextConfig? { get }
+
+  var abCommonBadgeCount: Int? { get }
+
   func configure()
   func reset()
 
   func addObserver(_ observer: IABTestingServiceObserver)
   func removeObserver(_ observer: IABTestingServiceObserver)
 
-  func setOverriddenFlag(_ flag: ABConfig.Flag)
+  func setOverriddenFlag(forKey key: ABValueKey, value: Any?)
 
-  func getStringValue(forKey key: ABValueKey) -> String?
-  func getIntValue(forKey key: ABValueKey) -> Int?
-  func getBoolValue(forKey key: ABValueKey) -> Bool?
-  func getDecodableValue<T: Decodable>(forKey key: ABValueKey, type: T.Type) -> T?
-
-  func getReadableValue(for flag: ABConfig.Flag) -> String?
+  func getValue(forKey key: ABValueKey) -> Any?
 }
 
 protocol IABTestingServiceObserver: Observer {
@@ -44,6 +45,14 @@ class ABTestingService: IABTestingService {
     return nil
   }
 
+  var isOverridingEnabled: Bool {
+    didSet {
+      configStorage.userDefaults.set(isOverridingEnabled, forKey: Keys.overridingEnabled)
+      configStorage.userDefaults.synchronize()
+      notifyObservers()
+    }
+  }
+
   var localConfig: ABConfig? {
     for provider in providers {
       if let provider = provider as? DefaultConfigProvider {
@@ -53,13 +62,17 @@ class ABTestingService: IABTestingService {
     return nil
   }
 
-  var isOverridingEnabled: Bool {
-    didSet {
-      configStorage.userDefaults.set(isOverridingEnabled, forKey: Keys.overridingEnabled)
-      configStorage.userDefaults.synchronize()
-      notifyObservers()
-    }
-  }
+  @ABFlag(key: .mainBackgroundColor)
+  var abMainBackgroundColor: String?
+
+  @ABFlag(key: .mainShowLogo)
+  var abMainShowLogo: Bool?
+
+  @ABFlag(key: .mainText)
+  var abMainText: ABMainTextConfig?
+
+  @ABFlag(key: .badgeCount)
+  var abCommonBadgeCount: Int?
 
   static let shared = ABTestingService()
 
@@ -104,6 +117,7 @@ class ABTestingService: IABTestingService {
 
   func reset() {
     providers.forEach { $0.reset() }
+    isOverridingEnabled = false
   }
 
   func addObserver(_ observer: IABTestingServiceObserver) {
@@ -117,93 +131,11 @@ class ABTestingService: IABTestingService {
     self.observers.remove(at: index)
   }
 
-  func setOverriddenFlag(_ flag: ABConfig.Flag) {
-    overriddenProvider?.setOverriddenFlag(flag)
+  func setOverriddenFlag(forKey key: ABValueKey, value: Any?) {
+    overriddenProvider?.setOverriddenFlag(.init(key: key.rawValue, description: nil, value: value))
     notifyObservers()
   }
 
-  func getStringValue(forKey key: ABValueKey) -> String? {
-    guard key.valueType == .string else {
-      assertionFailure("Requesting AB value with wrong type for key `\(key.rawValue)`")
-      return nil
-    }
-    return getValue(forKey: key) as? String
-  }
-
-  func getIntValue(forKey key: ABValueKey) -> Int? {
-    guard key.valueType == .int else {
-      assertionFailure("Requesting AB value with wrong type for key `\(key.rawValue)`")
-      return nil
-    }
-    return getValue(forKey: key) as? Int
-  }
-
-  func getBoolValue(forKey key: ABValueKey) -> Bool? {
-    guard key.valueType == .bool else {
-      assertionFailure("Requesting AB value with wrong type for key `\(key.rawValue)`")
-      return nil
-    }
-    return getValue(forKey: key) as? Bool
-  }
-
-  func getDecodableValue<T: Decodable>(forKey key: ABValueKey, type: T.Type) -> T? {
-    guard case let .model(type) = key.valueType,
-          type is T.Type else {
-      assertionFailure("Requesting AB value with wrong type for key `\(key.rawValue)`")
-      return nil
-    }
-    return getValue(forKey: key) as? T
-  }
-
-  func getReadableValue(for flag: ABConfig.Flag) -> String? {
-    guard let valueKey = flag.valueKey else {
-      assertionFailure()
-      return nil
-    }
-
-    switch valueKey.valueType {
-    case .string:
-      let stringValue = getStringValue(forKey: valueKey)?.nilIfEmpty
-      if let stringValue = stringValue {
-        return stringValue
-      } else {
-        return "nil"
-      }
-
-    case .bool:
-      var boolValue: Bool?
-      if valueKey == .overridingEnabled {
-        boolValue = isOverridingEnabled
-      } else {
-        boolValue = getBoolValue(forKey: valueKey)
-      }
-      guard let boolValue = boolValue else {
-        return "nil"
-      }
-      return boolValue ? "true" : "false"
-
-    case .int:
-      guard let intValue = getIntValue(forKey: valueKey) else {
-        return "nil"
-      }
-      return "\(intValue)"
-
-    case let .model(type):
-      guard let value = getDecodableValue(forKey: valueKey, type: type) else {
-        return "nil"
-      }
-
-      guard let data = try? JSONEncoder().encode(value),
-            let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-            let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted, .sortedKeys]),
-            let prettyString = String(data: prettyData, encoding: .utf8) else { return nil }
-
-      return prettyString
-    }
-  }
-}
-
-private extension ABTestingService {
   func getValue(forKey key: ABValueKey) -> Any? {
     guard isConfigured else { return nil }
 
@@ -215,7 +147,9 @@ private extension ABTestingService {
 
     return nil
   }
+}
 
+private extension ABTestingService {
   func notifyObservers() {
     self.observers.forEach { observer in
       if let observer = observer.observer as? IABTestingServiceObserver {

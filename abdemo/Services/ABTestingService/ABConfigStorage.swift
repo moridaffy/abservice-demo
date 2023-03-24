@@ -16,6 +16,7 @@ class ABConfigStorage {
   func saveConfig(_ config: ABConfig?, forKey key: Key) {
     guard let config = config,
           let data = try? encoder.encode(config) else {
+      assertionFailure()
       return
     }
 

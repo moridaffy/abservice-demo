@@ -31,7 +31,7 @@ extension FlagEdit {
 
       setupLayout()
 
-      textView.text = viewModel.getReadableValue()
+      textView.text = viewModel.readableValue
     }
 
     override func viewWillAppear(_ animated: Bool) {

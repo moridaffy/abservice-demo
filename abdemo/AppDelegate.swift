@@ -7,11 +7,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    print("🔥 \(NSHomeDirectory())")
 
     setupServices(application)
     setupWindow()
 
-    application.applicationIconBadgeNumber = ABTestingService.shared.getIntValue(forKey: .badgeCount) ?? .zero
+    application.applicationIconBadgeNumber = ABTestingService.shared.abCommonBadgeCount ?? .zero
 
     return true
   }

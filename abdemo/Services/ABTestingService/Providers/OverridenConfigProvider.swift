@@ -30,13 +30,13 @@ class OverriddenConfigProvider {
 
     config.collections = [collection]
     storage.saveConfig(config, forKey: .cachedOverriddenConfig)
-    self.config = config
+    setConfig(config)
   }
 }
 
 extension OverriddenConfigProvider: IABConfigProvider {
   func reset() {
-    self.config = .empty
+    setConfig(.empty)
   }
 
   func fetchConfig(completion: @escaping (Error?) -> Void) {
@@ -44,12 +44,18 @@ extension OverriddenConfigProvider: IABConfigProvider {
     completion(nil)
   }
 
+  func setConfig(_ config: ABConfig) {
+    storage.saveConfig(config, forKey: .cachedOverriddenConfig)
+    self.config = config
+  }
+
   func getValue(for key: ABValueKey) -> Any? {
     guard abTestingService?.isOverridingEnabled == true else { return nil }
 
-    return config?.collections
+    let value = config?.collections
       .flatMap { $0.flags }
       .first(where: { $0.key == key.rawValue })?
       .value
+    return value
   }
 }

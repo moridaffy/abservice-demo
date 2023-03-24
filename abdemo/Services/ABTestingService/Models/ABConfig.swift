@@ -97,9 +97,9 @@ extension ABConfig {
         self.conditionFalseValue = try values.decodeIfPresent(Bool.self, forKey: .conditionFalseValue)
 
       case let .model(type):
-        self.value = try values.decodeIfPresent(type, forKey: .value)
-        self.conditionTrueValue = try values.decodeIfPresent(type, forKey: .conditionTrueValue)
-        self.conditionFalseValue = try values.decodeIfPresent(type, forKey: .conditionFalseValue)
+        self.value = Self.decodeModel(of: type, from: values, at: .value)
+        self.conditionTrueValue = Self.decodeModel(of: type, from: values, at: .conditionTrueValue)
+        self.conditionFalseValue = Self.decodeModel(of: type, from: values, at: .conditionFalseValue)
       }
     }
 
@@ -134,18 +134,34 @@ extension ABConfig {
         try container.encode(value as? Bool, forKey: .value)
 
       case let .model(type):
-        guard let value = value as? Encodable,
-              let data = try? JSONEncoder().encode(value),
-              let model = try? JSONDecoder().decode(type, from: data) else {
+        if let value = value as? Encodable,
+           let data = try? JSONEncoder().encode(value),
+           let model = try? JSONDecoder().decode(type, from: data) {
+          try container.encode(model, forKey: .value)
+        } else if let value = value as? [String: Any],
+                  let data = try? JSONSerialization.data(withJSONObject: value) {
+          try container.encode(data, forKey: .value)
+        } else {
           try container.encodeNil(forKey: .value)
-          return
         }
-        try container.encode(model, forKey: .value)
       }
     }
 
     var copy: Flag {
       .init(key: key, description: description, value: value)
+    }
+  }
+}
+
+private extension ABConfig.Flag {
+  static func decodeModel<T: Codable>(of type: T.Type, from container: KeyedDecodingContainer<ABConfig.Flag.CodingKeys>, at key: ABConfig.Flag.CodingKeys) -> T? {
+    if let model = try? container.decodeIfPresent(type, forKey: key) {
+      return model
+    } else if let data = try? container.decodeIfPresent(Data.self, forKey: key),
+              let model = try? JSONDecoder().decode(type, from: data) {
+      return model
+    } else {
+      return nil
     }
   }
 }

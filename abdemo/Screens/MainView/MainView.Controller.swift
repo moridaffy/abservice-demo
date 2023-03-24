@@ -91,20 +91,20 @@ private extension MainView.Controller {
 
 extension MainView.Controller: IABTestingServiceObserver {
   func didChangeConfig(_ service: IABTestingService) {
-    if let backgroundColorCode = service.getStringValue(forKey: .mainBackgroundColor),
+    if let backgroundColorCode = service.abMainBackgroundColor?.nilIfEmpty,
        let backgroundColor = UIColor(hex: backgroundColorCode) {
       view.backgroundColor = backgroundColor
     }
 
-    if let showLogo = service.getBoolValue(forKey: .mainShowLogo) {
-      logoImageView.isHidden = !showLogo
+    if let mainShowLogo = service.abMainShowLogo {
+      logoImageView.isHidden = !mainShowLogo
     }
 
-    if let textConfig = service.getDecodableValue(forKey: .mainText, type: ABMainTextConfig.self) {
-      titleLabel.text = textConfig.title
-      subtitleLabel.text = textConfig.subtitle
+    if let mainText = service.abMainText {
+      titleLabel.text = mainText.title
+      subtitleLabel.text = mainText.subtitle
 
-      if let color = UIColor(hex: textConfig.textColor) {
+      if let color = UIColor(hex: mainText.textColor) {
         titleLabel.textColor = color
         subtitleLabel.textColor = color
       }

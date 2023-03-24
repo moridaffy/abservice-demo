@@ -20,6 +20,7 @@ extension DebugView {
 
     func reset() {
       abTestingService.reset()
+      reloadCellModels()
     }
 
     func saveBoolValue(_ value: Bool, for flag: ABConfig.Flag) {
@@ -46,7 +47,13 @@ extension DebugView {
     }
 
     func getReadableValue(for flag: ABConfig.Flag) -> String? {
-      abTestingService.getReadableValue(for: flag)
+      if flag.key == ABValueKey.overridingEnabled.rawValue {
+        return "\(ABTestingService.shared.isOverridingEnabled)"
+      }
+
+      guard let valueKey = flag.valueKey else { return "error" }
+      guard let value = abTestingService.getValue(forKey: valueKey) else { return "nil" }
+      return "\(value)"
     }
   }
 }
@@ -55,10 +62,10 @@ private extension DebugView.Model {
   func overrideFlag(value: Any?, flag: ABConfig.Flag) {
     if flag.key == ABValueKey.overridingEnabled.rawValue {
       abTestingService.isOverridingEnabled = value as? Bool ?? false
+    } else if let key = flag.valueKey {
+      abTestingService.setOverriddenFlag(forKey: key, value: value)
     } else {
-      let newFlag = flag.copy
-      newFlag.value = value
-      abTestingService.setOverriddenFlag(newFlag)
+      return
     }
 
     reloadCellModels()

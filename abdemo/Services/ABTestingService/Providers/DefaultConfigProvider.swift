@@ -35,10 +35,12 @@ extension DefaultConfigProvider: IABConfigProvider {
       .first(where: { $0.key == key.rawValue })
     guard let flag = flag else { return nil }
 
+    let value: Any?
     if let conditions = flag.conditions {
-      return ABConditionResolver.resolve(conditions) ? flag.conditionTrueValue : flag.conditionFalseValue
+      value = ABConditionResolver.resolve(conditions) ? flag.conditionTrueValue : flag.conditionFalseValue
     } else {
-      return flag.value
+      value = flag.value
     }
+    return value
   }
 }
