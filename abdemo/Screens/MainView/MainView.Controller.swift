@@ -44,7 +44,7 @@ extension MainView {
       setupLayout()
       setupActions()
 
-      ABTestingService.shared.addObserver(self)
+      ABTestingService.shared.addObserver(self, for: [.mainBackgroundColor, .mainShowLogo, .mainText])
     }
 
     deinit {

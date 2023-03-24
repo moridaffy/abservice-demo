@@ -13,7 +13,7 @@ protocol IABTestingService: AnyObject {
   func configure()
   func reset()
 
-  func addObserver(_ observer: IABTestingServiceObserver)
+  func addObserver(_ observer: IABTestingServiceObserver, for keys: [ABValueKey])
   func removeObserver(_ observer: IABTestingServiceObserver)
 
   func setOverriddenFlag(forKey key: ABValueKey, value: Any?)
@@ -34,7 +34,7 @@ class ABTestingService: IABTestingService {
 
   private var isConfigured: Bool = false
   private var providers: [IABConfigProvider] = []
-  private var observers: [AnyObserver] = []
+  private var observers: [AnyObserver: [ABValueKey]] = [:]
 
   private var overriddenProvider: OverriddenConfigProvider? {
     for provider in providers {
@@ -120,20 +120,21 @@ class ABTestingService: IABTestingService {
     isOverridingEnabled = false
   }
 
-  func addObserver(_ observer: IABTestingServiceObserver) {
-    if self.observers.contains(where: { $0.observer === observer }) { return }
+  func addObserver(_ observer: IABTestingServiceObserver, for keys: [ABValueKey]) {
+    if self.observers.contains(where: { $0.key.observer === observer }) { return }
     observer.didChangeConfig(self)
-    self.observers.append(.init(observer))
+    self.observers[.init(observer)] = keys
   }
 
   func removeObserver(_ observer: IABTestingServiceObserver) {
-    guard let index = self.observers.firstIndex(where: { $0.observer === observer }) else { return }
-    self.observers.remove(at: index)
+    if let observer = self.observers.first(where: { $0.key.observer === observer })?.key {
+      self.observers.removeValue(forKey: observer)
+    }
   }
 
   func setOverriddenFlag(forKey key: ABValueKey, value: Any?) {
     overriddenProvider?.setOverriddenFlag(.init(key: key.rawValue, description: nil, value: value))
-    notifyObservers()
+    notifyObservers(for: key)
   }
 
   func getValue(forKey key: ABValueKey) -> Any? {
@@ -150,11 +151,12 @@ class ABTestingService: IABTestingService {
 }
 
 private extension ABTestingService {
-  func notifyObservers() {
-    self.observers.forEach { observer in
-      if let observer = observer.observer as? IABTestingServiceObserver {
-        observer.didChangeConfig(self)
-      }
+  func notifyObservers(for key: ABValueKey? = nil) {
+    var observers = self.observers
+    if let key = key {
+      observers = observers.filter { $0.value.contains(key) }
     }
+
+    observers.forEach { ($0.key.observer as? IABTestingServiceObserver)?.didChangeConfig(self) }
   }
 }
