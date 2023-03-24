@@ -4,42 +4,42 @@ import Foundation
   private let key: ABValueKey
   private let fallbackValue: T?
 
-  private weak var service: IABTestingService?
+  private weak var abService: IABTestingService?
+  private weak var logService: ILogService?
 
   var wrappedValue: T? {
     get {
-      guard let value = getValue(forKey: self.key) else { return nil }
-      return value as? T ?? getCodableValue(value) ?? fallbackValue
+      guard let value = getValue(forKey: key) else { return nil }
+      (self.logService ?? LogService.shared)?.setIdentity(identity: key.rawValue, value: value)
+      return value
     }
     set {
-      (self.service ?? ABTestingService.shared)
-        .setOverriddenFlag(forKey: key, value: newValue)
+      (self.abService ?? ABTestingService.shared).setOverriddenFlag(forKey: key, value: newValue)
     }
   }
 
-  init(key: ABValueKey, fallbackValue: T? = nil, service: IABTestingService? = nil) {
+  init(key: ABValueKey,
+       fallbackValue: T? = nil,
+       abService: IABTestingService? = nil,
+       logService: ILogService? = nil) {
     self.key = key
     self.fallbackValue = fallbackValue
-    self.service = service
+    self.abService = abService
   }
 }
 
 private extension ABFlag {
-  func getValue(forKey key: ABValueKey) -> Any? {
-    (self.service ?? ABTestingService.shared)
-      .getValue(forKey: key)
-  }
+  func getValue(forKey key: ABValueKey) -> T? {
+    guard let rawValue = (self.abService ?? ABTestingService.shared).getValue(forKey: key) else { return nil }
 
-  func getCodableValue(_ value: Any) -> T? {
-    guard let dictionary = value as? [String: Any] else { return nil }
-
-    do {
-      let data = try JSONSerialization.data(withJSONObject: dictionary)
-      let model = try JSONDecoder().decode(T.self, from: data)
-      return model
-    } catch let error {
-      print("error: \(error.localizedDescription)")
-      return nil
+    if let value = rawValue as? T {
+      return value
+    } else if let dictionary = rawValue as? [String: Any],
+              let data = try? JSONSerialization.data(withJSONObject: dictionary),
+              let value = try? JSONDecoder().decode(T.self, from: data) {
+      return value
+    } else {
+      return fallbackValue
     }
   }
 }

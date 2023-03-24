@@ -26,6 +26,7 @@
 		0C81460729BFE05200BAA3E5 /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C81460629BFE05200BAA3E5 /* String+Helpers.swift */; };
 		0CB3D87D29CDAD3400A08177 /* ABFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3D87C29CDAD3400A08177 /* ABFlag.swift */; };
 		0CB3D88129CDE0DA00A08177 /* Data+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3D88029CDE0DA00A08177 /* Data+Helpers.swift */; };
+		0CB3D88329CE35B400A08177 /* LogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB3D88229CE35B400A08177 /* LogService.swift */; };
 		0CB64DFB29C10BD400152F35 /* UIColor+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64DFA29C10BD400152F35 /* UIColor+Helpers.swift */; };
 		0CB64E0729C19CEA00152F35 /* FlagEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64E0629C19CEA00152F35 /* FlagEdit.swift */; };
 		0CB64E0929C19D1B00152F35 /* ToggleEdit.Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB64E0829C19D1B00152F35 /* ToggleEdit.Controller.swift */; };
@@ -62,6 +63,7 @@
 		0C81460629BFE05200BAA3E5 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
 		0CB3D87C29CDAD3400A08177 /* ABFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABFlag.swift; sourceTree = "<group>"; };
 		0CB3D88029CDE0DA00A08177 /* Data+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Helpers.swift"; sourceTree = "<group>"; };
+		0CB3D88229CE35B400A08177 /* LogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogService.swift; sourceTree = "<group>"; };
 		0CB64DFA29C10BD400152F35 /* UIColor+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Helpers.swift"; sourceTree = "<group>"; };
 		0CB64DFC29C10EEF00152F35 /* abdemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = abdemo.entitlements; sourceTree = "<group>"; };
 		0CB64E0629C19CEA00152F35 /* FlagEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagEdit.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				0C8145E029BCDAF000BAA3E5 /* ABTestingService */,
 				0C8145FB29BCEB6300BAA3E5 /* APIService.swift */,
+				0CB3D88229CE35B400A08177 /* LogService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				0C81460129BCFE8800BAA3E5 /* DebugView.ToggleCell.swift in Sources */,
 				0C8145F329BCE85900BAA3E5 /* DebugView.Model.swift in Sources */,
 				0C81460729BFE05200BAA3E5 /* String+Helpers.swift in Sources */,
+				0CB3D88329CE35B400A08177 /* LogService.swift in Sources */,
 				0CFC29C729CB932900E40065 /* ABConfigStorage.swift in Sources */,
 				0C8145C029BCD5FC00BAA3E5 /* AppDelegate.swift in Sources */,
 				0CFC29C129CB87E100E40065 /* RemoteConfigProvider.swift in Sources */,
