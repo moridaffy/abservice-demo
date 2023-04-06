@@ -169,6 +169,16 @@ extension DebugView.Controller: UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     max(50.0, UITableView.automaticDimension)
   }
+
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let keyPath = viewModel.sections[indexPath.section].viewModels[indexPath.row].keyPath
+    let deleteAction = UIContextualAction(style: .normal, title: "Reset") { _, _, completion in
+      self.viewModel.resetValue(forKey: keyPath)
+      completion(true)
+    }
+    deleteAction.backgroundColor = .orange
+    return UISwipeActionsConfiguration(actions: [deleteAction])
+  }
 }
 
 extension DebugView.Controller: UITableViewDataSource {

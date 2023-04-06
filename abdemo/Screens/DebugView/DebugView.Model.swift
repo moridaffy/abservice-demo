@@ -27,6 +27,10 @@ extension DebugView {
       generateFeatures()
     }
 
+    func resetValue(forKey key: FAPKeyPath) {
+      debugProvider?.resetValue(forKey: key)
+    }
+
     func setValue(_ value: FAPValueType, for keyPath: FAPKeyPath) {
       debugProvider?.setValue(value.value, forKey: keyPath)
       generateFeatures()
