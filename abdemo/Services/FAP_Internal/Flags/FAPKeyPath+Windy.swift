@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - Main
+
 extension FAPKeyPath {
   enum Main: String, CaseIterable {
     case backgroundColor = "ab_main_background_color"
@@ -9,6 +11,18 @@ extension FAPKeyPath {
 
     var keyPath: FAPKeyPath {
       FAPKeyPath(collection: "main", key: rawValue)
+    }
+  }
+}
+
+// MARK: - Map
+
+extension FAPKeyPath {
+  enum Map: String, CaseIterable {
+    case mapLayers = "ab_map_layers"
+
+    var keyPath: FAPKeyPath {
+      FAPKeyPath(collection: "map", key: rawValue)
     }
   }
 }

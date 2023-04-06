@@ -48,7 +48,10 @@ class FAPProvider: FAPIProvider {
   }
 
   func getValue<Value>(forKey key: FAPKeyPath) -> Value? {
-    let rawValue = values[key]
+    guard let rawValue = values[key] else {
+      return nil
+    }
+
     if let value = rawValue as? Value {
       return value
     }

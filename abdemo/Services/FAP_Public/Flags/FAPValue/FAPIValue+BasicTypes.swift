@@ -32,6 +32,20 @@ extension String: FAPIValue {
   }
 }
 
+extension Array: FAPIValue where Element == String {
+  init?(encoded value: FAPValueType) {
+    guard case .array(let array) = value else {
+      return nil
+    }
+
+    self = array.compactMap { $0.value as? String }
+  }
+
+  func encoded() -> FAPValueType {
+    .array(self.compactMap { .string($0) })
+  }
+}
+
 // MARK: - Bool
 
 extension Bool: FAPIValue {

@@ -9,6 +9,9 @@ class WNDFAPLoader: FAPLoader<FAPRootCollection> {
   var main: FAPMainCollection {
     collection.main
   }
+  var map: FAPMapCollection {
+    collection.map
+  }
 }
 
 extension WNDFAPLoader {

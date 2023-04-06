@@ -38,6 +38,24 @@ extension MainView {
       return label
     }()
 
+    private let sessionLabel: UILabel = {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.textAlignment = .center
+      label.font = .systemFont(ofSize: 16.0, weight: .regular)
+      label.numberOfLines = 0
+      return label
+    }()
+
+    private let mapLayersLabel: UILabel = {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.textAlignment = .center
+      label.font = .systemFont(ofSize: 16.0, weight: .regular)
+      label.numberOfLines = 0
+      return label
+    }()
+
     private let debugMenuButton: UIButton = {
       let button = UIButton()
       button.translatesAutoresizingMaskIntoConstraints = false
@@ -52,6 +70,7 @@ extension MainView {
 
       setupLayout()
       setupActions()
+      setupContent()
 
       WNDFAPLoader.shared.addObserver(self, for: FAPKeyPath.Main.allCases.compactMap { $0.keyPath })
     }
@@ -68,6 +87,8 @@ private extension MainView.Controller {
     view.addSubview(sinceLabel)
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
+    view.addSubview(sessionLabel)
+    view.addSubview(mapLayersLabel)
     view.addSubview(debugMenuButton)
 
     view.addConstraints([
@@ -88,6 +109,14 @@ private extension MainView.Controller {
       subtitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
       subtitleLabel.rightAnchor.constraint(equalTo: titleLabel.rightAnchor),
 
+      sessionLabel.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 32.0),
+      sessionLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
+      sessionLabel.rightAnchor.constraint(equalTo: titleLabel.rightAnchor),
+
+      mapLayersLabel.topAnchor.constraint(equalTo: sessionLabel.bottomAnchor, constant: 16.0),
+      mapLayersLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
+      mapLayersLabel.rightAnchor.constraint(equalTo: titleLabel.rightAnchor),
+
       debugMenuButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8.0),
       debugMenuButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
     ])
@@ -95,6 +124,15 @@ private extension MainView.Controller {
 
   func setupActions() {
     debugMenuButton.addTarget(self, action: #selector(debugMenuButtonTapped), for: .touchUpInside)
+  }
+
+  func setupContent() {
+    let session = AppSessionService.shared
+    sessionLabel.text = [
+      "number of launches: \(session.numberOfLaunches)",
+      "user is pro: \(session.isUserPro)"
+    ]
+      .joined(separator: "\n")
   }
 
   @objc func debugMenuButtonTapped() {
@@ -127,6 +165,16 @@ extension MainView.Controller: FAPILoaderObserver {
       let textColor = UIColor(hex: textConfig.textColor) ?? .black
       titleLabel.textColor = textColor
       subtitleLabel.textColor = textColor
+    }
+
+    if let mapLayers = loader.map.mapLayers {
+      var parts = ["Available map layers"]
+      if mapLayers.isEmpty {
+        parts.append("none")
+      } else {
+        parts.append(contentsOf: mapLayers)
+      }
+      mapLayersLabel.text = parts.joined(separator: "\n")
     }
   }
 }

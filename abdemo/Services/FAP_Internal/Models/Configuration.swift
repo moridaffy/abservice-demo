@@ -56,6 +56,16 @@ extension Configuration {
       return value
     } else if let value = try? container.decodeIfPresent(Data.self, forKey: key) {
       return value
+    } else if let value = try? container.decodeIfPresent([Double].self, forKey: key) {
+      return value
+    } else if let value = try? container.decodeIfPresent([Float].self, forKey: key) {
+      return value
+    } else if let value = try? container.decodeIfPresent([String].self, forKey: key) {
+      return value
+    } else if let value = try? container.decodeIfPresent([Bool].self, forKey: key) {
+      return value
+    } else if let value = try? container.decodeIfPresent([Data].self, forKey: key) {
+      return value
     } else {
       for type in possibleCodableTypes {
         if let value = try? container.decodeIfPresent(type, forKey: key) {

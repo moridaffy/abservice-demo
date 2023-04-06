@@ -45,6 +45,7 @@
 		0CA0CF3729DEEF39007FAAEA /* DebugEditView.Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3629DEEF39007FAAEA /* DebugEditView.Controller.swift */; };
 		0CA0CF3929DEEF4A007FAAEA /* DebugEditView.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3829DEEF4A007FAAEA /* DebugEditView.Model.swift */; };
 		0CA0CF3B29DEF4CA007FAAEA /* Error+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3A29DEF4CA007FAAEA /* Error+Debug.swift */; };
+		0CA0CF3D29DF2B94007FAAEA /* FAPMapCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */; };
 		0CAA72FE29DC43560077A409 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA72FD29DC43560077A409 /* AppDelegate.swift */; };
 		0CAA730729DC43570077A409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CAA730629DC43570077A409 /* Assets.xcassets */; };
 		0CAA730A29DC43570077A409 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CAA730829DC43570077A409 /* LaunchScreen.storyboard */; };
@@ -92,6 +93,7 @@
 		0CA0CF3629DEEF39007FAAEA /* DebugEditView.Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEditView.Controller.swift; sourceTree = "<group>"; };
 		0CA0CF3829DEEF4A007FAAEA /* DebugEditView.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEditView.Model.swift; sourceTree = "<group>"; };
 		0CA0CF3A29DEF4CA007FAAEA /* Error+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Debug.swift"; sourceTree = "<group>"; };
+		0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPMapCollection.swift; sourceTree = "<group>"; };
 		0CAA72FA29DC43560077A409 /* abdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = abdemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAA72FD29DC43560077A409 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CAA730629DC43570077A409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,7 +153,6 @@
 		0C5F54BD29DC9B8D0059647C /* FAP_Internal */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CF2E29DEDE7D007FAAEA /* Models */,
 				0CA0CF1429DD8B00007FAAEA /* Loader */,
 				0C5F54D829DCABF50059647C /* Conditions */,
 				0C5F54CA29DCA0600059647C /* Models */,
@@ -184,6 +185,7 @@
 		0C5F54CA29DCA0600059647C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0CA0CF2F29DEDE8F007FAAEA /* MainTextConfig.swift */,
 				0C5F54CD29DCA0830059647C /* Configuration.swift */,
 				0C5F54CF29DCA3300059647C /* Configuration.Collection.swift */,
 				0C5F54D129DCA34F0059647C /* Configuration.Flag.swift */,
@@ -206,6 +208,7 @@
 			children = (
 				0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */,
 				0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */,
+				0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -263,15 +266,6 @@
 				0CA0CF2929DE09E5007FAAEA /* DebugView.Cell.swift */,
 			);
 			path = DebugView;
-			sourceTree = "<group>";
-		};
-		0CA0CF2E29DEDE7D007FAAEA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0CA0CF2F29DEDE8F007FAAEA /* MainTextConfig.swift */,
-			);
-			name = Models;
-			path = ../Models;
 			sourceTree = "<group>";
 		};
 		0CA0CF3129DEEEEC007FAAEA /* DebugEditView */ = {
@@ -437,6 +431,7 @@
 				0CA0CF2629DDFCDC007FAAEA /* DebugView.Model.swift in Sources */,
 				0CA0CF3529DEEF1E007FAAEA /* DebugEditView.swift in Sources */,
 				0CA0CF0D29DD81B2007FAAEA /* UIColor+Hex.swift in Sources */,
+				0CA0CF3D29DF2B94007FAAEA /* FAPMapCollection.swift in Sources */,
 				0CA0CF1629DD8B06007FAAEA /* WNDFAPLoader.swift in Sources */,
 				0CA0CF2C29DEBFF3007FAAEA /* UIAlertController+TextField.swift in Sources */,
 				0C5F54E029DCB34E0059647C /* FAPDebugProvider.swift in Sources */,
