@@ -1,13 +1,13 @@
 import Foundation
 
-protocol ILogService: AnyObject {
-  func setIdentity(identity: String, value: Any?)
+protocol ILogService {
+  func setIdentity(forKey key: String, value: String)
 }
 
 class LogService: ILogService {
   static let shared = LogService()
 
-  func setIdentity(identity: String, value: Any?) {
-    // TODO
+  func setIdentity(forKey key: String, value: String) {
+    print("💭 Setting identity: \(key) - \(value)")
   }
 }

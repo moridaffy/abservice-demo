@@ -11,6 +11,15 @@ extension MainView {
       return imageView
     }()
 
+    private let sinceLabel: UILabel = {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.textAlignment = .center
+      label.font = .italicSystemFont(ofSize: 16.0)
+      label.textColor = .black.withAlphaComponent(0.75)
+      return label
+    }()
+
     private let titleLabel: UILabel = {
       let label = UILabel()
       label.translatesAutoresizingMaskIntoConstraints = false
@@ -44,11 +53,11 @@ extension MainView {
       setupLayout()
       setupActions()
 
-      ABTestingService.shared.addObserver(self, for: [.mainBackgroundColor, .mainShowLogo, .mainText])
+      WNDFAPLoader.shared.addObserver(self, for: FAPKeyPath.Main.allCases.compactMap { $0.keyPath })
     }
 
     deinit {
-      ABTestingService.shared.removeObserver(self)
+      WNDFAPLoader.shared.removeObserver(self)
     }
   }
 }
@@ -56,6 +65,7 @@ extension MainView {
 private extension MainView.Controller {
   func setupLayout() {
     view.addSubview(logoImageView)
+    view.addSubview(sinceLabel)
     view.addSubview(titleLabel)
     view.addSubview(subtitleLabel)
     view.addSubview(debugMenuButton)
@@ -66,7 +76,11 @@ private extension MainView.Controller {
       logoImageView.heightAnchor.constraint(equalToConstant: 100.0),
       logoImageView.widthAnchor.constraint(equalToConstant: 100.0),
 
-      titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 16.0),
+      sinceLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 16.0),
+      sinceLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16.0),
+      sinceLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16.0),
+
+      titleLabel.topAnchor.constraint(equalTo: sinceLabel.bottomAnchor, constant: 32.0),
       titleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 32.0),
       titleLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -32.0),
 
@@ -85,29 +99,34 @@ private extension MainView.Controller {
 
   @objc func debugMenuButtonTapped() {
     let debugViewController = DebugView.build()
-    navigationController?.pushViewController(debugViewController, animated: true)
+    let navigationController = UINavigationController(rootViewController: debugViewController)
+    present(navigationController, animated: true)
   }
 }
 
-extension MainView.Controller: IABTestingServiceObserver {
-  func didChangeConfig(_ service: IABTestingService) {
-    if let backgroundColorCode = service.abMainBackgroundColor?.nilIfEmpty,
+extension MainView.Controller: FAPILoaderObserver {
+  func didChangeValues(_ loader: FAPILoader) {
+    guard let loader = loader as? WNDFAPLoader else { return }
+    if let backgroundColorCode = loader.main.backgroundColor,
        let backgroundColor = UIColor(hex: backgroundColorCode) {
       view.backgroundColor = backgroundColor
     }
 
-    if let mainShowLogo = service.abMainShowLogo {
-      logoImageView.isHidden = !mainShowLogo
+    if let showLogo = loader.main.showLogo {
+      logoImageView.isHidden = !showLogo
     }
 
-    if let mainText = service.abMainText {
-      titleLabel.text = mainText.title
-      subtitleLabel.text = mainText.subtitle
+    if let sinceYear = loader.main.sinceYear {
+      sinceLabel.text = "Since \(sinceYear)"
+    }
 
-      if let color = UIColor(hex: mainText.textColor) {
-        titleLabel.textColor = color
-        subtitleLabel.textColor = color
-      }
+    if let textConfig = loader.main.textConfig {
+      titleLabel.text = textConfig.title
+      subtitleLabel.text = textConfig.subtitle
+
+      let textColor = UIColor(hex: textConfig.textColor) ?? .black
+      titleLabel.textColor = textColor
+      subtitleLabel.textColor = textColor
     }
   }
 }

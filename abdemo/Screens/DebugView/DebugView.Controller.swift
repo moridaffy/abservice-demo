@@ -6,7 +6,9 @@ extension DebugView {
     private let tableView: UITableView = {
       let tableView = UITableView(frame: .zero, style: .insetGrouped)
       tableView.translatesAutoresizingMaskIntoConstraints = false
-      tableView.register(DebugView.FlagCell.self, forCellReuseIdentifier: "cell")
+
+      tableView.register(DebugView.Cell.self, forCellReuseIdentifier: "cell")
+
       return tableView
     }()
 
@@ -32,9 +34,9 @@ extension DebugView {
     override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
 
-      setupNavigationBar()
-
       viewModel.view = self
+
+      setupNavigationBar()
     }
 
     func reloadTableView() {
@@ -48,15 +50,17 @@ private extension DebugView.Controller {
     view.addSubview(tableView)
 
     view.addConstraints([
-      tableView.topAnchor.constraint(equalTo: view.topAnchor),
+      tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
       tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
       tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     ])
+
+    view.backgroundColor = .white
   }
 
   func setupNavigationBar() {
-    title = "Debug menu"
+    title = "Debug view"
 
     if navigationItem.leftBarButtonItem == nil {
       navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(resetButtonTapped))
@@ -69,98 +73,124 @@ private extension DebugView.Controller {
   func setupTableView() {
     tableView.delegate = self
     tableView.dataSource = self
-
-    tableView.contentInset = view.safeAreaInsets
   }
 
-  func handleFlagTap(_ flag: ABConfig.Flag) {
-    guard let valueType = flag.valueKey?.valueType else { return }
-
-    if case .model = valueType {
-      let flagEdit = FlagEdit.build(flag: flag)
-      navigationController?.pushViewController(flagEdit, animated: true)
-      return
-    }
-
-    let alert = UIAlertController(title: "Edit value", message: flag.key, preferredStyle: .alert)
+  func handleFlagTap(keyPath: FAPKeyPath, value: FAPValueType) {
+    let alert = UIAlertController(title: "Set new value", message: keyPath.path, preferredStyle: .alert)
     alert.addAction(.init(title: "Cancel", style: .cancel))
 
-    switch valueType {
-    case .string, .int:
-      alert.addTextField { textField in
-        textField.placeholder = "value"
-        textField.text = self.viewModel.getReadableValue(for: flag)
-        textField.keyboardType = valueType == .string ? .default : .numberPad
-      }
-      alert.addAction(.init(title: "Save", style: .default, handler: { _ in
-        let newValue = alert.textFields?.first?.text
-        if valueType == .string {
-          self.viewModel.saveStringValue(newValue, for: flag)
+    switch value {
+    case let .integer(value):
+      alert.addTextField(text: "\(value)", keyboardType: .numberPad)
+      alert.addAction(.init(title: "Save", style: .default) { _ in
+        if let text = alert.textFields?.first?.text?.nilIfEmpty,
+           let value = Int(text) {
+          self.viewModel.setValue(.integer(value), for: keyPath)
         } else {
-          self.viewModel.saveIntValue(newValue, for: flag)
+          self.viewModel.setValue(.none, for: keyPath)
         }
-      }))
+      })
 
-    case .bool:
-      alert.addAction(.init(title: "True", style: .default, handler: { _ in
-        self.viewModel.saveBoolValue(true, for: flag)
-      }))
-      alert.addAction(.init(title: "False", style: .default, handler: { _ in
-        self.viewModel.saveBoolValue(false, for: flag)
-      }))
+    case let .double(value):
+      alert.addTextField(text: "\(value)", keyboardType: .decimalPad)
+      alert.addAction(.init(title: "Save", style: .default) { _ in
+        if let text = alert.textFields?.first?.text?.nilIfEmpty,
+           let value = Double(text) {
+          self.viewModel.setValue(.double(value), for: keyPath)
+        } else {
+          self.viewModel.setValue(.none, for: keyPath)
+        }
+      })
 
-    default:
-      break
+    case let .float(value):
+      alert.addTextField(text: "\(value)", keyboardType: .decimalPad)
+      alert.addAction(.init(title: "Save", style: .default) { _ in
+        if let text = alert.textFields?.first?.text?.nilIfEmpty,
+           let value = Float(text) {
+          self.viewModel.setValue(.float(value), for: keyPath)
+        } else {
+          self.viewModel.setValue(.none, for: keyPath)
+        }
+      })
+
+    case let .string(value):
+      alert.addTextField(text: value)
+      alert.addAction(.init(title: "Save", style: .default) { _ in
+        if let text = alert.textFields?.first?.text?.nilIfEmpty {
+          self.viewModel.setValue(.string(text), for: keyPath)
+        } else {
+          self.viewModel.setValue(.none, for: keyPath)
+        }
+      })
+
+    case .boolean:
+      alert.addAction(.init(title: "true", style: .default) { _ in
+        self.viewModel.setValue(.boolean(true), for: keyPath)
+      })
+      alert.addAction(.init(title: "false", style: .default) { _ in
+        self.viewModel.setValue(.boolean(false), for: keyPath)
+      })
+
+    case .model(_):
+      let debugEditView = DebugEditView.build(keyPath: keyPath, value: value, provider: viewModel.debugProvider)
+      navigationController?.pushViewController(debugEditView, animated: true)
+      return
+
+    case .data(_):
+      return
+
+    case .array(_):
+      return
+
+    case .none:
+      return
     }
 
     present(alert, animated: true)
   }
-
 
   @objc func resetButtonTapped() {
     viewModel.reset()
   }
 
   @objc func doneButtonTapped() {
-    navigationController?.popViewController(animated: true)
+    dismiss(animated: true)
   }
 }
 
 extension DebugView.Controller: UITableViewDelegate {
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    min(50.0, UITableView.automaticDimension)
-  }
-
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
 
-    handleFlagTap(viewModel.cellModels[indexPath.section][indexPath.row].flag)
+    let viewModel = viewModel.sections[indexPath.section].viewModels[indexPath.row]
+    handleFlagTap(keyPath: viewModel.keyPath, value: viewModel.value)
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    max(50.0, UITableView.automaticDimension)
   }
 }
 
 extension DebugView.Controller: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    viewModel.cellModels.count
+    viewModel.sections.count
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if section == 0 {
-      return nil
-    }
-    return viewModel.abTestingService.localConfig?.collections[section - 1].name
+    viewModel.sections[section].title
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    viewModel.cellModels[section].count
+    viewModel.sections[section].viewModels.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? DebugView.FlagCell else {
-      assertionFailure()
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? DebugView.Cell else {
       return UITableViewCell()
     }
 
-    cell.update(model: viewModel.cellModels[indexPath.section][indexPath.row])
+    let viewModel = viewModel.sections[indexPath.section].viewModels[indexPath.row]
+    cell.update(viewModel: viewModel)
 
     return cell
   }

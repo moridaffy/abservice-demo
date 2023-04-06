@@ -1,4 +1,10 @@
-import Foundation
+//
+//  AppDelegate.swift
+//  Untitled 2
+//
+//  Created by Max S on 04.04.2023.
+//
+
 import UIKit
 
 @main
@@ -11,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     setupServices(application)
     setupWindow()
-
-    application.applicationIconBadgeNumber = ABTestingService.shared.abCommonBadgeCount ?? .zero
 
     return true
   }
@@ -30,7 +34,7 @@ private extension AppDelegate {
   }
 
   func setupServices(_ application: UIApplication) {
-    ABTestingService.shared.configure()
+//    ABTestingService.shared.configure()
 
     UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { _, _ in }
     application.registerForRemoteNotifications()
