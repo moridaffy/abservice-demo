@@ -16,32 +16,32 @@ extension DebugEditView {
     }
 
     func read() -> String {
-      guard let model = value.value as? Codable else {
-        return "no model"
+      guard let model = value.value as? Codable,
+            let data = try? JSONEncoder().encode(model),
+            let object = try? JSONSerialization.jsonObject(with: data),
+            let prettyData = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]),
+            let prettyString = String(data: prettyData, encoding: .utf8) else {
+        return "failed to parse"
       }
 
-      guard let data = try? JSONEncoder().encode(model) else {
-        return "no data"
-      }
-
-      guard let object = try? JSONSerialization.jsonObject(with: data) else {
-        return "no object"
-      }
-
-      guard let prettyData = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]) else {
-        return "no pretty data"
-      }
-
-      guard let string = String(data: prettyData, encoding: .utf8) else {
-        return "no pretty string"
-      }
-
-      return string
+      return prettyString
     }
 
     func save(_ value: String?, completion: (Result<Bool, Error>) -> Void) {
-      // TODO
-      completion(.failure(NSError(domain: "ab", code: 0)))
+      guard let string = value?.nilIfEmpty,
+            let data = string.data(using: .utf8) else {
+        completion(.failure(NSError(domain: "ab", code: 0)))
+        return
+      }
+
+      // check if json is valid
+      guard (try? JSONSerialization.jsonObject(with: data)) != nil else {
+        completion(.failure(NSError(domain: "ab", code: 1)))
+        return
+      }
+
+      provider?.setValue(data, forKey: keyPath)
+      completion(.success(true))
     }
   }
 }

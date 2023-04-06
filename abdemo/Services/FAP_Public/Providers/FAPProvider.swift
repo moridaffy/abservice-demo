@@ -48,7 +48,18 @@ class FAPProvider: FAPIProvider {
   }
 
   func getValue<Value>(forKey key: FAPKeyPath) -> Value? {
-    values[key] as? Value
+    let rawValue = values[key]
+    if let value = rawValue as? Value {
+      return value
+    }
+
+    if let modelType = Value.self as? Decodable.Type,
+       let data = rawValue as? Data,
+       let model = try? JSONDecoder().decode(modelType, from: data) {
+      return model as? Value
+    }
+
+    return nil
   }
 
   func resetValue(forKey key: FAPKeyPath) {
