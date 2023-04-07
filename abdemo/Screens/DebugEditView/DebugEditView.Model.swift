@@ -2,13 +2,13 @@ import Foundation
 
 extension DebugEditView {
   class Model {
-    let keyPath: FAPKeyPath
+    let key: String
     let value: FAPValueType
     
-    weak var provider: FAPIProvider?
+    weak var provider: FAPISettableProvider?
 
-    init(keyPath: FAPKeyPath, value: FAPValueType,  provider: FAPIProvider?) {
-      self.keyPath = keyPath
+    init(key: String, value: FAPValueType,  provider: FAPISettableProvider?) {
+      self.key = key
       self.value = value
 
       assert(provider != nil)
@@ -40,7 +40,7 @@ extension DebugEditView {
         return
       }
 
-      provider?.setValue(data, forKey: keyPath)
+      provider?.setValue(data, forKey: key)
       completion(.success(true))
     }
   }

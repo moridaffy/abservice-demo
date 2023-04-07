@@ -1,8 +1,8 @@
 import Foundation
 
 enum DebugEditView {
-  static func build(keyPath: FAPKeyPath, value: FAPValueType, provider: FAPIProvider?) -> Controller {
-    let model = Model(keyPath: keyPath, value: value, provider: provider)
+  static func build(key: String, value: FAPValueType, provider: FAPISettableProvider?) -> Controller {
+    let model = Model(key: key, value: value, provider: provider)
     let controller = Controller(viewModel: model)
     return controller
   }

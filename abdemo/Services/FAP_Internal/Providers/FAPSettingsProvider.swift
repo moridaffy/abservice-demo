@@ -7,8 +7,6 @@ class FAPSettingsProvider: FAPProvider {
   }
 
   override var name: String { "Settings" }
-  override var description: String { "User-specified settings" }
-  override var isWritable: Bool { true }
 
   private let userDefaults: UserDefaults
 
@@ -18,22 +16,6 @@ class FAPSettingsProvider: FAPProvider {
     super.init()
 
     fetchCachedValues()
-  }
-
-  override func setValue<Value>(_ value: Value?, forKey key: FAPKeyPath) -> Bool {
-    guard super.setValue(value, forKey: key) else { return false }
-    setCachedValue(forKey: key, value: value)
-    return true
-  }
-
-  override func resetValue(forKey key: FAPKeyPath) {
-    super.resetValue(forKey: key)
-    resetCachedValue(forKey: key)
-  }
-
-  override func reset() {
-    super.reset()
-    resetCachedValues()
   }
 }
 
@@ -45,13 +27,12 @@ private extension FAPSettingsProvider {
       guard let value = userDefaults.object(forKey: key) else { continue }
 
       let originalKey = key.dropFirst(Constants.cachedDebugKeyPrefix.count)
-      guard let keyPath = FAPKeyPath(path: String(originalKey)) else { continue }
-      values[keyPath] = value
+      values[String(originalKey)] = value
     }
   }
 
-  func setCachedValue(forKey key: FAPKeyPath, value: Any?) {
-    let cachedKey = Constants.cachedDebugKeyPrefix + key.path
+  func setCachedValue(forKey key: String, value: Any?) {
+    let cachedKey = Constants.cachedDebugKeyPrefix + key
 
     userDefaults.set(value, forKey: cachedKey)
 
@@ -62,8 +43,8 @@ private extension FAPSettingsProvider {
     userDefaults.set(keys, forKey: Constants.cachedDebugListKey)
   }
 
-  func resetCachedValue(forKey key: FAPKeyPath) {
-    let cachedKey = Constants.cachedDebugKeyPrefix + key.path
+  func resetCachedValue(forKey key: String) {
+    let cachedKey = Constants.cachedDebugKeyPrefix + key
 
     userDefaults.removeObject(forKey: cachedKey)
 
@@ -81,5 +62,40 @@ private extension FAPSettingsProvider {
       }
     }
     userDefaults.removeObject(forKey: Constants.cachedDebugListKey)
+  }
+}
+
+extension FAPSettingsProvider: FAPISettableProvider {
+  @discardableResult
+  func setValue<Value>(_ value: Value?, forKey key: String) -> Bool {
+    self.values[key] = value
+
+    // TODO: придумать, как определять, изменилось ли значение
+    let hasChanged = true
+    if hasChanged {
+      notifyObservers(keys: [key])
+    }
+    setCachedValue(forKey: key, value: value)
+
+    return true
+  }
+}
+
+extension FAPSettingsProvider: FAPIResettableProvider {
+  func reset() {
+    let keys = values.compactMap { $0.key }
+    values.removeAll()
+    notifyObservers(keys: keys)
+    resetCachedValues()
+  }
+
+  func resetValue(forKey key: String) {
+    let valueExisted = values[key] != nil
+    values.removeValue(forKey: key)
+
+    if valueExisted {
+      notifyObservers(keys: [key])
+    }
+    resetCachedValue(forKey: key)
   }
 }

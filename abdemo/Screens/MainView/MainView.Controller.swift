@@ -72,7 +72,7 @@ extension MainView {
       setupActions()
       setupContent()
 
-      WNDFAPLoader.shared.addObserver(self, for: FAPKeyPath.Main.allCases.compactMap { $0.keyPath })
+      WNDFAPLoader.shared.addObserver(self, for: FAPKeyPath.Main.allCases.compactMap { $0.keyPath.key })
     }
 
     deinit {
@@ -145,36 +145,31 @@ private extension MainView.Controller {
 extension MainView.Controller: FAPILoaderObserver {
   func didChangeValues(_ loader: FAPILoader) {
     guard let loader = loader as? WNDFAPLoader else { return }
-    if let backgroundColorCode = loader.main.backgroundColor,
-       let backgroundColor = UIColor(hex: backgroundColorCode) {
+    if let backgroundColor = UIColor(hex: loader.main.backgroundColor) {
       view.backgroundColor = backgroundColor
     }
 
-    if let showLogo = loader.main.showLogo {
-      logoImageView.isHidden = !showLogo
-    }
+    let showLogo = loader.main.showLogo
+    logoImageView.isHidden = !showLogo
 
-    if let sinceYear = loader.main.sinceYear {
-      sinceLabel.text = "Since \(sinceYear)"
-    }
+    let sinceYear = loader.main.sinceYear
+    sinceLabel.text = "Since \(sinceYear)"
 
-    if let textConfig = loader.main.textConfig {
-      titleLabel.text = textConfig.title
-      subtitleLabel.text = textConfig.subtitle
+    let textConfig = loader.main.textConfig
+    titleLabel.text = textConfig.title
+    subtitleLabel.text = textConfig.subtitle
 
-      let textColor = UIColor(hex: textConfig.textColor) ?? .black
-      titleLabel.textColor = textColor
-      subtitleLabel.textColor = textColor
-    }
+    let textColor = UIColor(hex: textConfig.textColor) ?? .black
+    titleLabel.textColor = textColor
+    subtitleLabel.textColor = textColor
 
-    if let mapLayers = loader.map.mapLayers {
-      var parts = ["Available map layers"]
-      if mapLayers.isEmpty {
-        parts.append("none")
-      } else {
-        parts.append(contentsOf: mapLayers)
-      }
-      mapLayersLabel.text = parts.joined(separator: "\n")
+    let mapLayers = loader.map.mapLayers
+    var parts = ["Available map layers"]
+    if mapLayers.isEmpty {
+      parts.append("none")
+    } else {
+      parts.append(contentsOf: mapLayers)
     }
+    mapLayersLabel.text = parts.joined(separator: "\n")
   }
 }

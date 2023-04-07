@@ -32,7 +32,7 @@ extension DebugView {
     }
 
     func update(viewModel: Model) {
-      self.titleLabel.text = viewModel.keyPath.key
+      self.titleLabel.text = viewModel.key
       self.valueLabel.text = viewModel.value.description
     }
   }
@@ -58,11 +58,11 @@ private extension DebugView.Cell {
 
 extension DebugView.Cell {
   class Model {
-    let keyPath: FAPKeyPath
+    let key: String
     let value: FAPValueType
 
-    init(keyPath: FAPKeyPath, value: FAPValueType) {
-      self.keyPath = keyPath
+    init(key: String, value: FAPValueType) {
+      self.key = key
       self.value = value
     }
   }

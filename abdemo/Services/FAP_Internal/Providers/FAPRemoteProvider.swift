@@ -6,8 +6,6 @@ class FAPRemoteProvider: FAPProvider {
   }
 
   override var name: String { "Remote" }
-  override var description: String { "Values fetched from remote" }
-  override var isWritable: Bool { false }
 
   private let apiService: IAPIService
   private let logService: ILogService
@@ -34,15 +32,9 @@ class FAPRemoteProvider: FAPProvider {
     fetchConfig()
   }
 
-  override func setValue<Value>(_ value: Value?, forKey key: FAPKeyPath) -> Bool {
-    false
-  }
-  override func resetValue(forKey key: FAPKeyPath) { }
-  override func reset() { }
-
-  override func getValue<Value>(forKey key: FAPKeyPath) -> Value? {
+  override func getValue<Value>(forKey key: String) -> Value? {
     let value: Value? = super.getValue(forKey: key)
-    logService.setIdentity(forKey: key.key, value: String(describing: value))
+    logService.setIdentity(forKey: key, value: String(describing: value))
     return value
   }
 }

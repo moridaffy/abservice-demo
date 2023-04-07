@@ -66,7 +66,7 @@ private extension DebugEditView.Controller {
   }
 
   func setupNavigationBar() {
-    title = viewModel.keyPath.key
+    title = viewModel.key
 
     if navigationItem.rightBarButtonItem == nil {
       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveButtonTapped))

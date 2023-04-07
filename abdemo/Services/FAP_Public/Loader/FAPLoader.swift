@@ -12,10 +12,10 @@ protocol FAPILoader: AnyObject {
   var rootCollection: FAPICollection { get }
   var providers: [FAPIProvider] { get }
 
-  func addObserver(_ observer: FAPILoaderObserver, for keys: [FAPKeyPath])
+  func addObserver(_ observer: FAPILoaderObserver, for keys: [String])
   func removeObserver(_ observer: FAPILoaderObserver)
 
-  func didChangeValue(keys: [FAPKeyPath])
+  func didChangeValue(keys: [String])
 }
 
 extension FAPILoader {
@@ -30,7 +30,7 @@ class FAPLoader<Collection: FAPICollection>: FAPILoader {
 
   let collection: Collection
 
-  private var observers: [WeakObserver: [FAPKeyPath]] = [:]
+  private var observers: [WeakObserver: [String]] = [:]
 
   init(_ collectionType: Collection.Type,
        providers: [FAPIProvider]) {
@@ -41,7 +41,7 @@ class FAPLoader<Collection: FAPICollection>: FAPILoader {
     linkWithProviders()
   }
 
-  func addObserver(_ observer: FAPILoaderObserver, for keys: [FAPKeyPath]) {
+  func addObserver(_ observer: FAPILoaderObserver, for keys: [String]) {
     if observers.contains(where: { $0.key.observer === observer }) {
       assertionFailure()
       return
@@ -60,7 +60,7 @@ class FAPLoader<Collection: FAPICollection>: FAPILoader {
     observers.removeValue(forKey: observer.key)
   }
 
-  func didChangeValue(keys: [FAPKeyPath]) {
+  func didChangeValue(keys: [String]) {
     var observersToNotify: [FAPILoaderObserver] = []
 
     for observer in observers {

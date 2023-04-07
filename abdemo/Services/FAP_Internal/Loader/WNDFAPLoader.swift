@@ -4,7 +4,7 @@ class WNDFAPLoader: FAPLoader<FAPRootCollection> {
   static var shared = WNDFAPLoader(FAPRootCollection.self,
                                    providers: WNDFAPLoader.defaultProviders)
 
-  
+
 
   var main: FAPMainCollection {
     collection.main

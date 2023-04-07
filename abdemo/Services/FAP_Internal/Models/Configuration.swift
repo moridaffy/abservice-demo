@@ -13,12 +13,11 @@ struct Configuration: Codable {
 }
 
 extension Configuration {
-  func parse(resolver: FAPConditionResolver = .shared) -> [FAPKeyPath: Any?] {
-    var values: [FAPKeyPath: Any?] = [:]
+  func parse(resolver: FAPConditionResolver = .shared) -> [String: Any?] {
+    var values: [String: Any?] = [:]
 
     for collection in collections {
       for flag in collection.flags {
-        let keyPath = FAPKeyPath(collection: collection.key, key: flag.key)
         let value: Any?
 
         if let conditions = flag.conditions,
@@ -28,7 +27,7 @@ extension Configuration {
           value = flag.value
         }
 
-        values[keyPath] = value
+        values[flag.key] = value
       }
     }
 

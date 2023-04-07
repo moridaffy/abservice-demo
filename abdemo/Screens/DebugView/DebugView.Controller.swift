@@ -75,8 +75,8 @@ private extension DebugView.Controller {
     tableView.dataSource = self
   }
 
-  func handleFlagTap(keyPath: FAPKeyPath, value: FAPValueType) {
-    let alert = UIAlertController(title: "Set new value", message: keyPath.path, preferredStyle: .alert)
+  func handleFlagTap(key: String, value: FAPValueType) {
+    let alert = UIAlertController(title: "Set new value", message: key, preferredStyle: .alert)
     alert.addAction(.init(title: "Cancel", style: .cancel))
 
     switch value {
@@ -85,9 +85,9 @@ private extension DebugView.Controller {
       alert.addAction(.init(title: "Save", style: .default) { _ in
         if let text = alert.textFields?.first?.text?.nilIfEmpty,
            let value = Int(text) {
-          self.viewModel.setValue(.integer(value), for: keyPath)
+          self.viewModel.setValue(.integer(value), forKey: key)
         } else {
-          self.viewModel.setValue(.none, for: keyPath)
+          self.viewModel.setValue(.none, forKey: key)
         }
       })
 
@@ -96,9 +96,9 @@ private extension DebugView.Controller {
       alert.addAction(.init(title: "Save", style: .default) { _ in
         if let text = alert.textFields?.first?.text?.nilIfEmpty,
            let value = Double(text) {
-          self.viewModel.setValue(.double(value), for: keyPath)
+          self.viewModel.setValue(.double(value), forKey: key)
         } else {
-          self.viewModel.setValue(.none, for: keyPath)
+          self.viewModel.setValue(.none, forKey: key)
         }
       })
 
@@ -107,9 +107,9 @@ private extension DebugView.Controller {
       alert.addAction(.init(title: "Save", style: .default) { _ in
         if let text = alert.textFields?.first?.text?.nilIfEmpty,
            let value = Float(text) {
-          self.viewModel.setValue(.float(value), for: keyPath)
+          self.viewModel.setValue(.float(value), forKey: key)
         } else {
-          self.viewModel.setValue(.none, for: keyPath)
+          self.viewModel.setValue(.none, forKey: key)
         }
       })
 
@@ -117,22 +117,22 @@ private extension DebugView.Controller {
       alert.addTextField(text: value)
       alert.addAction(.init(title: "Save", style: .default) { _ in
         if let text = alert.textFields?.first?.text?.nilIfEmpty {
-          self.viewModel.setValue(.string(text), for: keyPath)
+          self.viewModel.setValue(.string(text), forKey: key)
         } else {
-          self.viewModel.setValue(.none, for: keyPath)
+          self.viewModel.setValue(.none, forKey: key)
         }
       })
 
     case .boolean:
       alert.addAction(.init(title: "true", style: .default) { _ in
-        self.viewModel.setValue(.boolean(true), for: keyPath)
+        self.viewModel.setValue(.boolean(true), forKey: key)
       })
       alert.addAction(.init(title: "false", style: .default) { _ in
-        self.viewModel.setValue(.boolean(false), for: keyPath)
+        self.viewModel.setValue(.boolean(false), forKey: key)
       })
 
     case .model(_):
-      let debugEditView = DebugEditView.build(keyPath: keyPath, value: value, provider: viewModel.debugProvider)
+      let debugEditView = DebugEditView.build(key: key, value: value, provider: viewModel.debugProvider)
       navigationController?.pushViewController(debugEditView, animated: true)
       return
 
@@ -163,7 +163,7 @@ extension DebugView.Controller: UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
 
     let viewModel = viewModel.sections[indexPath.section].viewModels[indexPath.row]
-    handleFlagTap(keyPath: viewModel.keyPath, value: viewModel.value)
+    handleFlagTap(key: viewModel.key, value: viewModel.value)
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -171,9 +171,9 @@ extension DebugView.Controller: UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    let keyPath = viewModel.sections[indexPath.section].viewModels[indexPath.row].keyPath
+    let key = viewModel.sections[indexPath.section].viewModels[indexPath.row].key
     let deleteAction = UIContextualAction(style: .normal, title: "Reset") { _, _, completion in
-      self.viewModel.resetValue(forKey: keyPath)
+      self.viewModel.resetValue(forKey: key)
       completion(true)
     }
     deleteAction.backgroundColor = .orange

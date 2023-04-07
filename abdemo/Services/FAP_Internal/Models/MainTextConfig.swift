@@ -36,3 +36,9 @@ extension MainTextConfig: FAPIValue {
     .model(self)
   }
 }
+
+extension MainTextConfig {
+  static var empty: Self {
+    .init(title: "", subtitle: "", textColor: "")
+  }
+}

@@ -2,8 +2,6 @@ import Foundation
 
 class FAPLocalProvider: FAPProvider {
   override var name: String { "Local" }
-  override var description: String { "Locally-stored static values" }
-  override var isWritable: Bool { false }
 
   private let decoder: JSONDecoder
   private let resolver: FAPConditionResolver
@@ -17,10 +15,6 @@ class FAPLocalProvider: FAPProvider {
 
     fetchConfig()
   }
-
-  override func setValue<Value>(_ value: Value?, forKey key: FAPKeyPath) -> Bool { false }
-  override func resetValue(forKey key: FAPKeyPath) { }
-  override func reset() { }
 }
 
 private extension FAPLocalProvider {

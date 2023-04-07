@@ -1,6 +1,6 @@
 import Foundation
 
 struct FAPMapCollection: FAPICollection {
-  @FAPFlag(keyPath: FAPKeyPath.Map.mapLayers.keyPath)
-  var mapLayers: [String]?
+  @FAPFlag(key: "ab_map_layers", default: [])
+  var mapLayers: [String]
 }

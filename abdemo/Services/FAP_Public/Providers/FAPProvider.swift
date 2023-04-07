@@ -2,17 +2,24 @@ import Foundation
 
 protocol FAPIProvider: AnyObject {
   var name: String { get }
-  var description: String { get }
-  var isWritable: Bool { get }
 
   var loader: FAPILoader? { get set }
 
-  @discardableResult
-  func setValue<Value>(_ value: Value?, forKey key: FAPKeyPath) -> Bool
-  func getValue<Value>(forKey key: FAPKeyPath) -> Value?
+  func getValue<Value>(forKey key: String) -> Value?
+}
 
-  func resetValue(forKey key: FAPKeyPath)
+protocol FAPISettableProvider: AnyObject {
+  @discardableResult
+  func setValue<Value>(_ value: Value?, forKey key: String) -> Bool
+}
+
+protocol FAPIResettableProvider: AnyObject {
   func reset()
+  func resetValue(forKey key: String)
+}
+
+extension FAPIProvider {
+  func reset() { }
 }
 
 class FAPProvider: FAPIProvider {
@@ -20,34 +27,12 @@ class FAPProvider: FAPIProvider {
     assertionFailure("Must be implemented in subclass")
     return "Default"
   }
-  var description: String {
-    assertionFailure("Must be implemented in subclass")
-    return "Unimplemented provider"
-  }
-  var isWritable: Bool {
-    assertionFailure("Must be implemented in subclass")
-    return false
-  }
 
-  var values: [FAPKeyPath: Any?] = [:]
+  var values: [String: Any?] = [:]
 
   weak var loader: FAPILoader?
 
-  @discardableResult
-  func setValue<Value>(_ value: Value?, forKey key: FAPKeyPath) -> Bool {
-    guard isWritable else { return false }
-    self.values[key] = value
-
-    // TODO: придумать, как определять, изменилось ли значение
-    let hasChanged = true
-    if hasChanged {
-      notifyObservers(keys: [key])
-    }
-
-    return true
-  }
-
-  func getValue<Value>(forKey key: FAPKeyPath) -> Value? {
+  func getValue<Value>(forKey key: String) -> Value? {
     guard let rawValue = values[key] else {
       return nil
     }
@@ -64,25 +49,10 @@ class FAPProvider: FAPIProvider {
 
     return nil
   }
-
-  func resetValue(forKey key: FAPKeyPath) {
-    let valueExisted = values[key] != nil
-    values.removeValue(forKey: key)
-
-    if valueExisted {
-      notifyObservers(keys: [key])
-    }
-  }
-
-  func reset() {
-    let keys = values.compactMap { $0.key }
-    values.removeAll()
-    notifyObservers(keys: keys)
-  }
 }
 
-private extension FAPProvider {
-  func notifyObservers(keys: [FAPKeyPath]) {
+internal extension FAPProvider {
+  func notifyObservers(keys: [String]) {
     loader?.didChangeValue(keys: keys)
   }
 }

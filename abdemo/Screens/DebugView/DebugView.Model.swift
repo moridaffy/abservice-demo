@@ -12,9 +12,10 @@ extension DebugView {
       }
     }
 
-    var debugProvider: FAPIProvider? {
-      // TODO: придумать более элегантный способ получения нужного провайдера
-      loader.providers.first(where: { $0.name.lowercased().contains("debug") })
+    var debugProvider: FAPDebugProvider? {
+      loader.providers
+        .compactMap { $0 as? FAPDebugProvider }
+        .first
     }
 
     init(loader: FAPILoader) {
@@ -27,12 +28,12 @@ extension DebugView {
       generateFeatures()
     }
 
-    func resetValue(forKey key: FAPKeyPath) {
+    func resetValue(forKey key: String) {
       debugProvider?.resetValue(forKey: key)
     }
 
-    func setValue(_ value: FAPValueType, for keyPath: FAPKeyPath) {
-      debugProvider?.setValue(value.value, forKey: keyPath)
+    func setValue(_ value: FAPValueType, forKey key: String) {
+      debugProvider?.setValue(value.value, forKey: key)
       generateFeatures()
     }
   }
@@ -53,7 +54,7 @@ private extension DebugView.Model {
       var viewModels: [DebugView.Cell.Model] = []
       flagLoop: for flag in Mirror(reflecting: subCollection).children.lazy {
         guard let value = flag.value as? FAPIFlag else { continue flagLoop }
-        viewModels.append(.init(keyPath: value.keyPath, value: value.value ?? .none))
+        viewModels.append(.init(key: value.key, value: value.value ?? .none))
       }
 
       sections.append(.init(title: title, viewModels: viewModels))
