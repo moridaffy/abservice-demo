@@ -66,10 +66,10 @@ private extension FAPDebugProvider {
   }
 
   func imitateUpdates() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
       guard let self = self else { return }
       let value = ["B80000", "DB3E00", "FCCB00", "008B02", "006B76", "1273DE", "004DCF", "5300EB", "EB9694", "FAD0C3", "FEF3BD", "C1E1C5", "BEDADC", "C4DEF6", "D4C4FB"].randomElement() ?? "000000"
-      self.setValue(value, forKey: FAPKeyPath.Main.backgroundColor.keyPath.key)
+      self.setValue(value, forKey: "ab_main_background_color")
       self.imitateUpdates()
     }
   }

@@ -1,12 +1,18 @@
 import Foundation
 
+// MARK: - Protocols
+
 protocol FAPICollection {
+  var providers: [FAPIProvider] { get }
+
   init()
 }
 
 protocol FAPIParentCollection {
   var subCollection: FAPICollection? { get }
 }
+
+// MARK: - FAPCollection
 
 @propertyWrapper
 class FAPCollection<Collection: FAPICollection>: Identifiable {
@@ -16,22 +22,34 @@ class FAPCollection<Collection: FAPICollection>: Identifiable {
 
   private var key: String?
 
-  private var loader = FAPLoaderWrapper()
+  private(set) var providers: [FAPIProvider] = []
+  private var subscribers: [AnyWrapper: ((Collection) -> Void)] = [:]
+  private weak var observer: FAPIProviderObserver?
 
-  init(key: String? = nil) {
+  init(key: String) {
     self.key = key
 
     self.wrappedValue = Collection()
   }
+
+  func subscribe(_ subscriber: AnyHashable, block: @escaping (Collection) -> Void) {
+    let subscriber = AnyWrapper(subscriber)
+    subscribers[subscriber] = block
+    block(wrappedValue)
+  }
 }
 
-extension FAPCollection: FAPIConfigurableWithLoader {
-  func configure(with loader: FAPILoader) {
-    self.loader.loader = loader
+extension FAPCollection: FAPIConfigurableWithProviders {
+  func configure(with providers: [FAPIProvider]) {
+    self.providers = providers
 
     Mirror(reflecting: wrappedValue).children.lazy.forEach { child in
-      if let configurable = child.value as? FAPIConfigurableWithLoader {
-        configurable.configure(with: loader)
+      let value = child.value
+      if let configurable = value as? FAPIConfigurableWithProviders {
+        configurable.configure(with: providers)
+      }
+      if let observable = value as? FAPIObservable {
+        observable.addObserver(self)
       }
     }
   }
@@ -40,5 +58,32 @@ extension FAPCollection: FAPIConfigurableWithLoader {
 extension FAPCollection: FAPIParentCollection {
   var subCollection: FAPICollection? {
     wrappedValue
+  }
+}
+
+extension FAPCollection: FAPIProviderObserver {
+  func didChangeValue(key: String?) {
+    subscribers.forEach { $0.value(wrappedValue) }
+    observer?.didChangeValue(key: key)
+  }
+}
+
+extension FAPCollection: FAPIObservable {
+  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?) {
+    if self.observer != nil {
+      assertionFailure()
+    }
+
+    self.observer = observer
+    observer.didChangeValue(key: key)
+  }
+
+  func removeObserver(_ observer: FAPIProviderObserver) {
+    guard self.observer == nil else {
+      assertionFailure()
+      return
+    }
+
+    self.observer = nil
   }
 }

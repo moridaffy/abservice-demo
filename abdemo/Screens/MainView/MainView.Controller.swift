@@ -72,11 +72,33 @@ extension MainView {
       setupActions()
       setupContent()
 
-      WNDFAPLoader.shared.addObserver(self, for: FAPKeyPath.Main.allCases.compactMap { $0.keyPath.key })
-    }
+      FAPRootCollection.shared._main.subscribe(self) { [weak self] collection in
+        if let backgroundColor = UIColor(hex: collection.backgroundColor) {
+          self?.view.backgroundColor = backgroundColor
+        }
 
-    deinit {
-      WNDFAPLoader.shared.removeObserver(self)
+        self?.logoImageView.isHidden = collection.showLogo
+
+        self?.sinceLabel.text = "Since \(collection.sinceYear)"
+
+        let config = collection.textConfig
+        self?.titleLabel.text = config.title
+        self?.subtitleLabel.text = config.subtitle
+
+        let textColor = UIColor(hex: config.textColor) ?? .black
+        self?.titleLabel.textColor = textColor
+        self?.subtitleLabel.textColor = textColor
+      }
+
+      FAPRootCollection.shared.map._mapLayers.subscribe(self) { [weak self] newValue in
+        var parts = ["Available map layers"]
+        if newValue.isEmpty {
+          parts.append("none")
+        } else {
+          parts.append(contentsOf: newValue)
+        }
+        self?.mapLayersLabel.text = parts.joined(separator: "\n")
+      }
     }
   }
 }
@@ -136,40 +158,8 @@ private extension MainView.Controller {
   }
 
   @objc func debugMenuButtonTapped() {
-    let debugViewController = DebugView.build()
+    let debugViewController = DebugView.build(collection: FAPRootCollection.shared)
     let navigationController = UINavigationController(rootViewController: debugViewController)
     present(navigationController, animated: true)
-  }
-}
-
-extension MainView.Controller: FAPILoaderObserver {
-  func didChangeValues(_ loader: FAPILoader) {
-    guard let loader = loader as? WNDFAPLoader else { return }
-    if let backgroundColor = UIColor(hex: loader.main.backgroundColor) {
-      view.backgroundColor = backgroundColor
-    }
-
-    let showLogo = loader.main.showLogo
-    logoImageView.isHidden = !showLogo
-
-    let sinceYear = loader.main.sinceYear
-    sinceLabel.text = "Since \(sinceYear)"
-
-    let textConfig = loader.main.textConfig
-    titleLabel.text = textConfig.title
-    subtitleLabel.text = textConfig.subtitle
-
-    let textColor = UIColor(hex: textConfig.textColor) ?? .black
-    titleLabel.textColor = textColor
-    subtitleLabel.textColor = textColor
-
-    let mapLayers = loader.map.mapLayers
-    var parts = ["Available map layers"]
-    if mapLayers.isEmpty {
-      parts.append("none")
-    } else {
-      parts.append(contentsOf: mapLayers)
-    }
-    mapLayersLabel.text = parts.joined(separator: "\n")
   }
 }

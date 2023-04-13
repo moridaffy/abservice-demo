@@ -2,7 +2,7 @@ import Foundation
 
 extension DebugView {
   class Model {
-    private let loader: FAPILoader
+    private let collection: FAPICollection
 
     weak var view: Controller?
 
@@ -13,13 +13,13 @@ extension DebugView {
     }
 
     var debugProvider: FAPDebugProvider? {
-      loader.providers
+      collection.providers
         .compactMap { $0 as? FAPDebugProvider }
         .first
     }
 
-    init(loader: FAPILoader) {
-      self.loader = loader
+    init(collection: FAPICollection) {
+      self.collection = collection
       generateFeatures()
     }
 
@@ -41,26 +41,26 @@ extension DebugView {
 
 private extension DebugView.Model {
   func generateFeatures() {
-    var sections: [Section] = []
+//    var sections: [Section] = []
 
-    let rootCollection = self.loader.rootCollection
-    collectionLoop: for collection in Mirror(reflecting: rootCollection).children.lazy {
-      guard let label = collection.label?.nilIfEmpty else { continue collectionLoop }
-      let title = label.hasPrefix("_") ? String(label.dropFirst()) : label
-
-      guard let parentCollection = collection.value as? FAPIParentCollection,
-            let subCollection = parentCollection.subCollection else { continue collectionLoop }
-
-      var viewModels: [DebugView.Cell.Model] = []
-      flagLoop: for flag in Mirror(reflecting: subCollection).children.lazy {
-        guard let value = flag.value as? FAPIFlag else { continue flagLoop }
-        viewModels.append(.init(key: value.key, value: value.value ?? .none))
-      }
-
-      sections.append(.init(title: title, viewModels: viewModels))
-    }
-
-    self.sections = sections
+//    let rootCollection = self.loader.rootCollection
+//    collectionLoop: for collection in Mirror(reflecting: rootCollection).children.lazy {
+//      guard let label = collection.label?.nilIfEmpty else { continue collectionLoop }
+//      let title = label.hasPrefix("_") ? String(label.dropFirst()) : label
+//
+//      guard let parentCollection = collection.value as? FAPIParentCollection,
+//            let subCollection = parentCollection.subCollection else { continue collectionLoop }
+//
+//      var viewModels: [DebugView.Cell.Model] = []
+//      flagLoop: for flag in Mirror(reflecting: subCollection).children.lazy {
+//        guard let value = flag.value as? FAPIFlag else { continue flagLoop }
+//        viewModels.append(.init(key: value.key, value: value.value ?? .none))
+//      }
+//
+//      sections.append(.init(title: title, viewModels: viewModels))
+//    }
+//
+//    self.sections = sections
   }
 }
 

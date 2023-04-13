@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0C5F54AE29DC56390059647C /* FAPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54AD29DC56390059647C /* FAPProvider.swift */; };
-		0C5F54B029DC57050059647C /* FAPKeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54AF29DC57050059647C /* FAPKeyPath.swift */; };
 		0C5F54B329DC5D2C0059647C /* FAPFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B229DC5D2C0059647C /* FAPFlag.swift */; };
-		0C5F54B729DC5EF70059647C /* FAPLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B629DC5EF60059647C /* FAPLoader.swift */; };
 		0C5F54BA29DC5FAF0059647C /* FAPCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B929DC5FAF0059647C /* FAPCollection.swift */; };
-		0C5F54BC29DC60A80059647C /* FAPLoaderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54BB29DC60A80059647C /* FAPLoaderWrapper.swift */; };
 		0C5F54C229DC9BDA0059647C /* FAPRemoteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C129DC9BDA0059647C /* FAPRemoteProvider.swift */; };
 		0C5F54C429DC9C900059647C /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C329DC9C900059647C /* APIService.swift */; };
 		0C5F54C729DC9E2B0059647C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5F54C629DC9E2B0059647C /* config.json */; };
@@ -26,12 +23,11 @@
 		0C5F54DE29DCAD140059647C /* AppSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DD29DCAD140059647C /* AppSessionService.swift */; };
 		0C5F54E029DCB34E0059647C /* FAPDebugProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DF29DCB34E0059647C /* FAPDebugProvider.swift */; };
 		0C5F54E229DCB3ED0059647C /* FAPSettingsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54E129DCB3ED0059647C /* FAPSettingsProvider.swift */; };
+		0C7A4E0D29E6146E008AA9C7 /* AnyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7A4E0C29E6146E008AA9C7 /* AnyWrapper.swift */; };
 		0CA0CF0329DD7E84007FAAEA /* FAPMainCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */; };
-		0CA0CF0629DD7ED9007FAAEA /* FAPKeyPath+Windy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0529DD7ED9007FAAEA /* FAPKeyPath+Windy.swift */; };
 		0CA0CF0929DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0829DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift */; };
 		0CA0CF0D29DD81B2007FAAEA /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0C29DD81B2007FAAEA /* UIColor+Hex.swift */; };
 		0CA0CF1329DD89E0007FAAEA /* FAPRootCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */; };
-		0CA0CF1629DD8B06007FAAEA /* WNDFAPLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1529DD8B06007FAAEA /* WNDFAPLoader.swift */; };
 		0CA0CF1829DD9379007FAAEA /* LogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1729DD9379007FAAEA /* LogService.swift */; };
 		0CA0CF1D29DDB896007FAAEA /* WeakObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1C29DDB896007FAAEA /* WeakObserver.swift */; };
 		0CA0CF1F29DDBBCE007FAAEA /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1E29DDBBCE007FAAEA /* String+Helpers.swift */; };
@@ -56,11 +52,8 @@
 
 /* Begin PBXFileReference section */
 		0C5F54AD29DC56390059647C /* FAPProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPProvider.swift; sourceTree = "<group>"; };
-		0C5F54AF29DC57050059647C /* FAPKeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPKeyPath.swift; sourceTree = "<group>"; };
 		0C5F54B229DC5D2C0059647C /* FAPFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPFlag.swift; sourceTree = "<group>"; };
-		0C5F54B629DC5EF60059647C /* FAPLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPLoader.swift; sourceTree = "<group>"; };
 		0C5F54B929DC5FAF0059647C /* FAPCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPCollection.swift; sourceTree = "<group>"; };
-		0C5F54BB29DC60A80059647C /* FAPLoaderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPLoaderWrapper.swift; sourceTree = "<group>"; };
 		0C5F54C129DC9BDA0059647C /* FAPRemoteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPRemoteProvider.swift; sourceTree = "<group>"; };
 		0C5F54C329DC9C900059647C /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		0C5F54C629DC9E2B0059647C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
@@ -74,12 +67,11 @@
 		0C5F54DD29DCAD140059647C /* AppSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionService.swift; sourceTree = "<group>"; };
 		0C5F54DF29DCB34E0059647C /* FAPDebugProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPDebugProvider.swift; sourceTree = "<group>"; };
 		0C5F54E129DCB3ED0059647C /* FAPSettingsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPSettingsProvider.swift; sourceTree = "<group>"; };
+		0C7A4E0C29E6146E008AA9C7 /* AnyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapper.swift; sourceTree = "<group>"; };
 		0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPMainCollection.swift; sourceTree = "<group>"; };
-		0CA0CF0529DD7ED9007FAAEA /* FAPKeyPath+Windy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FAPKeyPath+Windy.swift"; sourceTree = "<group>"; };
 		0CA0CF0829DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FAPIValue+BasicTypes.swift"; sourceTree = "<group>"; };
 		0CA0CF0C29DD81B2007FAAEA /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPRootCollection.swift; sourceTree = "<group>"; };
-		0CA0CF1529DD8B06007FAAEA /* WNDFAPLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WNDFAPLoader.swift; sourceTree = "<group>"; };
 		0CA0CF1729DD9379007FAAEA /* LogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogService.swift; sourceTree = "<group>"; };
 		0CA0CF1C29DDB896007FAAEA /* WeakObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakObserver.swift; sourceTree = "<group>"; };
 		0CA0CF1E29DDBBCE007FAAEA /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
@@ -119,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				0CA0CF0729DD7F98007FAAEA /* FAPValue */,
-				0C5F54AF29DC57050059647C /* FAPKeyPath.swift */,
 				0C5F54B229DC5D2C0059647C /* FAPFlag.swift */,
 			);
 			path = Flags;
@@ -133,15 +124,6 @@
 			path = Providers;
 			sourceTree = "<group>";
 		};
-		0C5F54B529DC5EE70059647C /* Loader */ = {
-			isa = PBXGroup;
-			children = (
-				0C5F54B629DC5EF60059647C /* FAPLoader.swift */,
-				0C5F54BB29DC60A80059647C /* FAPLoaderWrapper.swift */,
-			);
-			path = Loader;
-			sourceTree = "<group>";
-		};
 		0C5F54B829DC5F830059647C /* Collections */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,12 +135,10 @@
 		0C5F54BD29DC9B8D0059647C /* FAP_Internal */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CF1429DD8B00007FAAEA /* Loader */,
 				0C5F54D829DCABF50059647C /* Conditions */,
 				0C5F54CA29DCA0600059647C /* Models */,
 				0C5F54BE29DC9B960059647C /* Providers */,
 				0CA0CEFD29DD7CDF007FAAEA /* Collections */,
-				0CA0CF0429DD7EB9007FAAEA /* Flags */,
 			);
 			path = FAP_Internal;
 			sourceTree = "<group>";
@@ -203,6 +183,14 @@
 			path = Conditions;
 			sourceTree = "<group>";
 		};
+		0C7A4E0B29E61461008AA9C7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0C7A4E0C29E6146E008AA9C7 /* AnyWrapper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		0CA0CEFD29DD7CDF007FAAEA /* Collections */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,14 +199,6 @@
 				0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */,
 			);
 			path = Collections;
-			sourceTree = "<group>";
-		};
-		0CA0CF0429DD7EB9007FAAEA /* Flags */ = {
-			isa = PBXGroup;
-			children = (
-				0CA0CF0529DD7ED9007FAAEA /* FAPKeyPath+Windy.swift */,
-			);
-			path = Flags;
 			sourceTree = "<group>";
 		};
 		0CA0CF0729DD7F98007FAAEA /* FAPValue */ = {
@@ -239,14 +219,6 @@
 				0CA0CF3A29DEF4CA007FAAEA /* Error+Debug.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		0CA0CF1429DD8B00007FAAEA /* Loader */ = {
-			isa = PBXGroup;
-			children = (
-				0CA0CF1529DD8B06007FAAEA /* WNDFAPLoader.swift */,
-			);
-			path = Loader;
 			sourceTree = "<group>";
 		};
 		0CA0CF1929DDB819007FAAEA /* Helpers */ = {
@@ -344,7 +316,7 @@
 		0CAA731829DC44E80077A409 /* FAP_Public */ = {
 			isa = PBXGroup;
 			children = (
-				0C5F54B529DC5EE70059647C /* Loader */,
+				0C7A4E0B29E61461008AA9C7 /* Helpers */,
 				0C5F54B429DC5D650059647C /* Providers */,
 				0C5F54B829DC5F830059647C /* Collections */,
 				0C5F54AB29DC56180059647C /* Flags */,
@@ -425,30 +397,26 @@
 			files = (
 				0CA0CF3729DEEF39007FAAEA /* DebugEditView.Controller.swift in Sources */,
 				0C5F54DE29DCAD140059647C /* AppSessionService.swift in Sources */,
-				0C5F54B729DC5EF70059647C /* FAPLoader.swift in Sources */,
 				0CA0CF3929DEEF4A007FAAEA /* DebugEditView.Model.swift in Sources */,
 				0CA0CF0929DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift in Sources */,
 				0CA0CF2629DDFCDC007FAAEA /* DebugView.Model.swift in Sources */,
 				0CA0CF3529DEEF1E007FAAEA /* DebugEditView.swift in Sources */,
 				0CA0CF0D29DD81B2007FAAEA /* UIColor+Hex.swift in Sources */,
 				0CA0CF3D29DF2B94007FAAEA /* FAPMapCollection.swift in Sources */,
-				0CA0CF1629DD8B06007FAAEA /* WNDFAPLoader.swift in Sources */,
 				0CA0CF2C29DEBFF3007FAAEA /* UIAlertController+TextField.swift in Sources */,
 				0C5F54E029DCB34E0059647C /* FAPDebugProvider.swift in Sources */,
+				0C7A4E0D29E6146E008AA9C7 /* AnyWrapper.swift in Sources */,
 				0C5F54B329DC5D2C0059647C /* FAPFlag.swift in Sources */,
 				0C5F54D029DCA3300059647C /* Configuration.Collection.swift in Sources */,
 				0C5F54D229DCA34F0059647C /* Configuration.Flag.swift in Sources */,
 				0C5F54CE29DCA0830059647C /* Configuration.swift in Sources */,
-				0C5F54BC29DC60A80059647C /* FAPLoaderWrapper.swift in Sources */,
 				0CAA72FE29DC43560077A409 /* AppDelegate.swift in Sources */,
 				0CA0CF2229DDFC94007FAAEA /* DebugView.swift in Sources */,
 				0C5F54BA29DC5FAF0059647C /* FAPCollection.swift in Sources */,
-				0CA0CF0629DD7ED9007FAAEA /* FAPKeyPath+Windy.swift in Sources */,
 				0CA0CF1829DD9379007FAAEA /* LogService.swift in Sources */,
 				0CA0CF3B29DEF4CA007FAAEA /* Error+Debug.swift in Sources */,
 				0CA0CF1D29DDB896007FAAEA /* WeakObserver.swift in Sources */,
 				0CA0CF0329DD7E84007FAAEA /* FAPMainCollection.swift in Sources */,
-				0C5F54B029DC57050059647C /* FAPKeyPath.swift in Sources */,
 				0C5F54DC29DCAC470059647C /* FAPConditionResolver.swift in Sources */,
 				0C5F54AE29DC56390059647C /* FAPProvider.swift in Sources */,
 				0C5F54E229DCB3ED0059647C /* FAPSettingsProvider.swift in Sources */,

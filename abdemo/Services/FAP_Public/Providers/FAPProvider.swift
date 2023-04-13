@@ -1,9 +1,9 @@
 import Foundation
 
-protocol FAPIProvider: AnyObject {
-  var name: String { get }
+// MARK: - Protocols
 
-  var loader: FAPILoader? { get set }
+protocol FAPIProvider: AnyObject, FAPIObservable {
+  var name: String { get }
 
   func getValue<Value>(forKey key: String) -> Value?
 }
@@ -18,9 +18,26 @@ protocol FAPIResettableProvider: AnyObject {
   func resetValue(forKey key: String)
 }
 
-extension FAPIProvider {
-  func reset() { }
+protocol FAPIProviderObserver: Observer {
+  func didChangeValue(key: String?)
 }
+
+protocol FAPIConfigurableWithProviders {
+  func configure(with providers: [FAPIProvider])
+}
+
+protocol FAPIObservable {
+  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?)
+  func removeObserver(_ observer: FAPIProviderObserver)
+}
+
+extension FAPIObservable {
+  func addObserver(_ observer: FAPIProviderObserver) {
+    addObserver(observer, forKey: nil)
+  }
+}
+
+// MARK: - Implementation
 
 class FAPProvider: FAPIProvider {
   var name: String {
@@ -29,8 +46,7 @@ class FAPProvider: FAPIProvider {
   }
 
   var values: [String: Any?] = [:]
-
-  weak var loader: FAPILoader?
+  private var observers: [String: WeakObserver] = [:]
 
   func getValue<Value>(forKey key: String) -> Value? {
     guard let rawValue = values[key] else {
@@ -53,6 +69,34 @@ class FAPProvider: FAPIProvider {
 
 internal extension FAPProvider {
   func notifyObservers(keys: [String]) {
-    loader?.didChangeValue(keys: keys)
+    for key in keys {
+      guard let observer = observers[key]?.observer as? FAPIProviderObserver else { continue }
+      observer.didChangeValue(key: key)
+    }
+  }
+}
+
+extension FAPProvider: FAPIObservable {
+  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?) {
+    guard let key = key else {
+      assertionFailure()
+      return
+    }
+
+    if observers[key] != nil {
+      assertionFailure()
+    }
+
+    observers[key] = .init(observer: observer)
+    observer.didChangeValue(key: key)
+  }
+
+  func removeObserver(_ observer: FAPIProviderObserver) {
+    guard let key = observers.first(where: { $0.value.observer === observer })?.key else {
+      assertionFailure()
+      return
+    }
+
+    observers.removeValue(forKey: key)
   }
 }
