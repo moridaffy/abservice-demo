@@ -1,13 +1,13 @@
 import Foundation
 
-class FAPLocalProvider: FAPProvider {
+class WWFLocalProvider: WWFProvider {
   override var name: String { "Local" }
 
   private let decoder: JSONDecoder
-  private let resolver: FAPConditionResolver
+  private let resolver: WWFConditionResolver
 
   init(decoder: JSONDecoder = JSONDecoder(),
-       resolver: FAPConditionResolver = .shared) {
+       resolver: WWFConditionResolver = .shared) {
     self.decoder = decoder
     self.resolver = resolver
 
@@ -17,7 +17,7 @@ class FAPLocalProvider: FAPProvider {
   }
 }
 
-private extension FAPLocalProvider {
+private extension WWFLocalProvider {
   func fetchConfig(completion: ((Error?) -> Void)? = nil) {
     guard let url = Bundle.main.url(forResource: "config", withExtension: "json") else {
       assertionFailure("Local config file missing")

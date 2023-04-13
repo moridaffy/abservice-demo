@@ -1,11 +1,11 @@
 import Foundation
 
-protocol FAPIValue: Equatable {
-  init?(encoded value: FAPValueType)
-  func encoded() -> FAPValueType
+protocol WWFIValue: Equatable {
+  init?(encoded value: WWFValueType)
+  func encoded() -> WWFValueType
 }
 
-enum FAPValueType {
+enum WWFValueType {
   case integer(Int)
   case double(Double)
   case float(Float)
@@ -13,7 +13,7 @@ enum FAPValueType {
   case boolean(Bool)
   case model(Codable)
   case data(Data)
-  case array([FAPValueType])
+  case array([WWFValueType])
   case none
 
   init?(value: Any) {
@@ -40,7 +40,7 @@ enum FAPValueType {
       self = .data(value)
 
     case let value as [Any]:
-      self = .array(value.compactMap { FAPValueType(value: $0) })
+      self = .array(value.compactMap { WWFValueType(value: $0) })
 
     default:
       self = .none

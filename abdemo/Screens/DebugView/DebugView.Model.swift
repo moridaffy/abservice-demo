@@ -2,7 +2,7 @@ import Foundation
 
 extension DebugView {
   class Model {
-    private let collection: FAPICollection
+    private let collection: WWFICollection
 
     weak var view: Controller?
 
@@ -12,13 +12,13 @@ extension DebugView {
       }
     }
 
-    var debugProvider: FAPDebugProvider? {
+    var debugProvider: WWFDebugProvider? {
       collection.providers
-        .compactMap { $0 as? FAPDebugProvider }
+        .compactMap { $0 as? WWFDebugProvider }
         .first
     }
 
-    init(collection: FAPICollection) {
+    init(collection: WWFICollection) {
       self.collection = collection
       generateFeatures()
     }
@@ -32,7 +32,7 @@ extension DebugView {
       debugProvider?.resetValue(forKey: key)
     }
 
-    func setValue(_ value: FAPValueType, forKey key: String) {
+    func setValue(_ value: WWFValueType, forKey key: String) {
       debugProvider?.setValue(value.value, forKey: key)
       generateFeatures()
     }

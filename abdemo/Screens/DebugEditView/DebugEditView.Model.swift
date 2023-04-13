@@ -3,11 +3,11 @@ import Foundation
 extension DebugEditView {
   class Model {
     let key: String
-    let value: FAPValueType
+    let value: WWFValueType
     
-    weak var provider: FAPISettableProvider?
+    weak var provider: WWFISettableProvider?
 
-    init(key: String, value: FAPValueType,  provider: FAPISettableProvider?) {
+    init(key: String, value: WWFValueType,  provider: WWFISettableProvider?) {
       self.key = key
       self.value = value
 

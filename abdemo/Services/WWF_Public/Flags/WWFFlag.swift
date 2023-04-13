@@ -2,16 +2,16 @@ import Foundation
 
 // MARK: - Protocols
 
-protocol FAPIFlag: FAPIConfigurableWithProviders {
+protocol WWFIFlag: WWFIConfigurableWithProviders {
   var key: String { get }
-  var value: FAPValueType? { get }
+  var value: WWFValueType? { get }
 }
 
-// MARK: - FAPCollection
+// MARK: - WWFCollection
 
 @propertyWrapper
-class FAPFlag<Value: FAPIValue>: Identifiable, FAPIFlag {
-  private typealias ValueSource = (value: Value?, source: FAPIProvider?)
+class WWFFlag<Value: WWFIValue>: Identifiable, WWFIFlag {
+  private typealias ValueSource = (value: Value?, source: WWFIProvider?)
 
   let id: UUID = UUID()
   let key: String
@@ -22,22 +22,22 @@ class FAPFlag<Value: FAPIValue>: Identifiable, FAPIFlag {
     }
     set {
       for provider in providers {
-        guard let provider = provider as? FAPISettableProvider else { continue }
+        guard let provider = provider as? WWFISettableProvider else { continue }
         provider.setValue(value, forKey: key)
       }
       notifyObserversIfNeeded()
     }
   }
-  var value: FAPValueType? {
+  var value: WWFValueType? {
     wrappedValue.encoded()
   }
 
   private var previousValue: Value?
   private var defaultValue: Value
 
-  private var providers: [FAPIProvider] = []
+  private var providers: [WWFIProvider] = []
   private var subscribers: [AnyWrapper: ((Value) -> Void)] = [:]
-  private weak var observer: FAPIProviderObserver?
+  private weak var observer: WWFIProviderObserver?
   
   init(key: String,
        default defaultValue: Value) {
@@ -52,7 +52,7 @@ class FAPFlag<Value: FAPIValue>: Identifiable, FAPIFlag {
   }
 }
 
-private extension FAPFlag {
+private extension WWFFlag {
   private func flagValue() -> ValueSource {
     for provider in providers {
       if let value: Value = provider.getValue(forKey: key) {
@@ -74,8 +74,8 @@ private extension FAPFlag {
   }
 }
 
-extension FAPFlag: FAPIObservable {
-  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?) {
+extension WWFFlag: WWFIObservable {
+  func addObserver(_ observer: WWFIProviderObserver, forKey key: String?) {
     if self.observer != nil {
       assertionFailure()
     }
@@ -84,7 +84,7 @@ extension FAPFlag: FAPIObservable {
     observer.didChangeValue(key: key)
   }
 
-  func removeObserver(_ observer: FAPIProviderObserver) {
+  func removeObserver(_ observer: WWFIProviderObserver) {
     guard self.observer == nil else {
       assertionFailure()
       return
@@ -94,15 +94,15 @@ extension FAPFlag: FAPIObservable {
   }
 }
 
-extension FAPFlag: FAPIConfigurableWithProviders {
-  func configure(with providers: [FAPIProvider]) {
+extension WWFFlag: WWFIConfigurableWithProviders {
+  func configure(with providers: [WWFIProvider]) {
     providers.forEach { $0.addObserver(self, forKey: key) }
     self.providers = providers
     previousValue = wrappedValue
   }
 }
 
-extension FAPFlag: FAPIProviderObserver {
+extension WWFFlag: WWFIProviderObserver {
   func didChangeValue(key: String?) {
     notifyObserversIfNeeded()
   }

@@ -2,8 +2,8 @@ import Foundation
 
 // MARK: - Int
 
-extension Int: FAPIValue {
-  init?(encoded value: FAPValueType) {
+extension Int: WWFIValue {
+  init?(encoded value: WWFValueType) {
     guard case .integer(let value) = value else {
       return nil
     }
@@ -11,15 +11,15 @@ extension Int: FAPIValue {
     self = value
   }
 
-  func encoded() -> FAPValueType {
+  func encoded() -> WWFValueType {
     .integer(self)
   }
 }
 
 // MARK: - String
 
-extension String: FAPIValue {
-  init?(encoded value: FAPValueType) {
+extension String: WWFIValue {
+  init?(encoded value: WWFValueType) {
     guard case .string(let value) = value else {
       return nil
     }
@@ -27,13 +27,13 @@ extension String: FAPIValue {
     self = value
   }
 
-  func encoded() -> FAPValueType {
+  func encoded() -> WWFValueType {
     .string(self)
   }
 }
 
-extension Array: FAPIValue where Element == String {
-  init?(encoded value: FAPValueType) {
+extension Array: WWFIValue where Element == String {
+  init?(encoded value: WWFValueType) {
     guard case .array(let array) = value else {
       return nil
     }
@@ -41,15 +41,15 @@ extension Array: FAPIValue where Element == String {
     self = array.compactMap { $0.value as? String }
   }
 
-  func encoded() -> FAPValueType {
+  func encoded() -> WWFValueType {
     .array(self.compactMap { .string($0) })
   }
 }
 
 // MARK: - Bool
 
-extension Bool: FAPIValue {
-  init?(encoded value: FAPValueType) {
+extension Bool: WWFIValue {
+  init?(encoded value: WWFValueType) {
     switch value {
     case .boolean(let v):
       self = v
@@ -62,15 +62,15 @@ extension Bool: FAPIValue {
     }
   }
 
-  func encoded() -> FAPValueType {
+  func encoded() -> WWFValueType {
     .boolean(self)
   }
 }
 
 // MARK: - Codable
 
-extension Decodable where Self: FAPIValue, Self: Encodable {
-  init?(encoded value: FAPValueType) {
+extension Decodable where Self: WWFIValue, Self: Encodable {
+  init?(encoded value: WWFValueType) {
     guard case .data(let data) = value else {
       return nil
     }
@@ -84,8 +84,8 @@ extension Decodable where Self: FAPIValue, Self: Encodable {
   }
 }
 
-extension Encodable where Self: FAPIValue, Self: Decodable {
-  func encoded() -> FAPValueType {
+extension Encodable where Self: WWFIValue, Self: Decodable {
+  func encoded() -> WWFValueType {
     do {
       let encoder = JSONEncoder()
       encoder.outputFormatting = .sortedKeys

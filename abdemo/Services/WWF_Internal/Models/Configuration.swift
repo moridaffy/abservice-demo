@@ -13,7 +13,7 @@ struct Configuration: Codable {
 }
 
 extension Configuration {
-  func parse(resolver: FAPConditionResolver = .shared) -> [String: Any?] {
+  func parse(resolver: WWFConditionResolver = .shared) -> [String: Any?] {
     var values: [String: Any?] = [:]
 
     for collection in collections {

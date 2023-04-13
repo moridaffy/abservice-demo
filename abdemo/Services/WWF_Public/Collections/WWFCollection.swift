@@ -2,29 +2,29 @@ import Foundation
 
 // MARK: - Protocols
 
-protocol FAPICollection {
-  var providers: [FAPIProvider] { get }
+protocol WWFICollection {
+  var providers: [WWFIProvider] { get }
 
   init()
 }
 
-protocol FAPIParentCollection {
-  var subCollection: FAPICollection? { get }
+protocol WWFIParentCollection {
+  var subCollection: WWFICollection? { get }
 }
 
-// MARK: - FAPCollection
+// MARK: - WWFCollection
 
 @propertyWrapper
-class FAPCollection<Collection: FAPICollection>: Identifiable {
+class WWFCollection<Collection: WWFICollection>: Identifiable {
   let id: UUID = UUID()
 
   var wrappedValue: Collection
 
   private var key: String?
 
-  private(set) var providers: [FAPIProvider] = []
+  private(set) var providers: [WWFIProvider] = []
   private var subscribers: [AnyWrapper: ((Collection) -> Void)] = [:]
-  private weak var observer: FAPIProviderObserver?
+  private weak var observer: WWFIProviderObserver?
 
   init(key: String) {
     self.key = key
@@ -39,37 +39,37 @@ class FAPCollection<Collection: FAPICollection>: Identifiable {
   }
 }
 
-extension FAPCollection: FAPIConfigurableWithProviders {
-  func configure(with providers: [FAPIProvider]) {
+extension WWFCollection: WWFIConfigurableWithProviders {
+  func configure(with providers: [WWFIProvider]) {
     self.providers = providers
 
     Mirror(reflecting: wrappedValue).children.lazy.forEach { child in
       let value = child.value
-      if let configurable = value as? FAPIConfigurableWithProviders {
+      if let configurable = value as? WWFIConfigurableWithProviders {
         configurable.configure(with: providers)
       }
-      if let observable = value as? FAPIObservable {
+      if let observable = value as? WWFIObservable {
         observable.addObserver(self)
       }
     }
   }
 }
 
-extension FAPCollection: FAPIParentCollection {
-  var subCollection: FAPICollection? {
+extension WWFCollection: WWFIParentCollection {
+  var subCollection: WWFICollection? {
     wrappedValue
   }
 }
 
-extension FAPCollection: FAPIProviderObserver {
+extension WWFCollection: WWFIProviderObserver {
   func didChangeValue(key: String?) {
     subscribers.forEach { $0.value(wrappedValue) }
     observer?.didChangeValue(key: key)
   }
 }
 
-extension FAPCollection: FAPIObservable {
-  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?) {
+extension WWFCollection: WWFIObservable {
+  func addObserver(_ observer: WWFIProviderObserver, forKey key: String?) {
     if self.observer != nil {
       assertionFailure()
     }
@@ -78,7 +78,7 @@ extension FAPCollection: FAPIObservable {
     observer.didChangeValue(key: key)
   }
 
-  func removeObserver(_ observer: FAPIProviderObserver) {
+  func removeObserver(_ observer: WWFIProviderObserver) {
     guard self.observer == nil else {
       assertionFailure()
       return

@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C5F54AE29DC56390059647C /* FAPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54AD29DC56390059647C /* FAPProvider.swift */; };
-		0C5F54B329DC5D2C0059647C /* FAPFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B229DC5D2C0059647C /* FAPFlag.swift */; };
-		0C5F54BA29DC5FAF0059647C /* FAPCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B929DC5FAF0059647C /* FAPCollection.swift */; };
-		0C5F54C229DC9BDA0059647C /* FAPRemoteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C129DC9BDA0059647C /* FAPRemoteProvider.swift */; };
+		0C5F54AE29DC56390059647C /* WWFProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54AD29DC56390059647C /* WWFProvider.swift */; };
+		0C5F54B329DC5D2C0059647C /* WWFFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B229DC5D2C0059647C /* WWFFlag.swift */; };
+		0C5F54BA29DC5FAF0059647C /* WWFCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54B929DC5FAF0059647C /* WWFCollection.swift */; };
+		0C5F54C229DC9BDA0059647C /* WWFRemoteProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C129DC9BDA0059647C /* WWFRemoteProvider.swift */; };
 		0C5F54C429DC9C900059647C /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C329DC9C900059647C /* APIService.swift */; };
 		0C5F54C729DC9E2B0059647C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5F54C629DC9E2B0059647C /* config.json */; };
-		0C5F54C929DC9E4F0059647C /* FAPLocalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C829DC9E4F0059647C /* FAPLocalProvider.swift */; };
+		0C5F54C929DC9E4F0059647C /* WWFLocalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54C829DC9E4F0059647C /* WWFLocalProvider.swift */; };
 		0C5F54CE29DCA0830059647C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54CD29DCA0830059647C /* Configuration.swift */; };
 		0C5F54D029DCA3300059647C /* Configuration.Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54CF29DCA3300059647C /* Configuration.Collection.swift */; };
 		0C5F54D229DCA34F0059647C /* Configuration.Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54D129DCA34F0059647C /* Configuration.Flag.swift */; };
 		0C5F54D429DCA3630059647C /* Configuration.Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54D329DCA3630059647C /* Configuration.Condition.swift */; };
-		0C5F54DA29DCAC050059647C /* FAPConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54D929DCAC050059647C /* FAPConditionType.swift */; };
-		0C5F54DC29DCAC470059647C /* FAPConditionResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DB29DCAC470059647C /* FAPConditionResolver.swift */; };
+		0C5F54DA29DCAC050059647C /* WWFConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54D929DCAC050059647C /* WWFConditionType.swift */; };
+		0C5F54DC29DCAC470059647C /* WWFConditionResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DB29DCAC470059647C /* WWFConditionResolver.swift */; };
 		0C5F54DE29DCAD140059647C /* AppSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DD29DCAD140059647C /* AppSessionService.swift */; };
-		0C5F54E029DCB34E0059647C /* FAPDebugProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DF29DCB34E0059647C /* FAPDebugProvider.swift */; };
-		0C5F54E229DCB3ED0059647C /* FAPSettingsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54E129DCB3ED0059647C /* FAPSettingsProvider.swift */; };
+		0C5F54E029DCB34E0059647C /* WWFDebugProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54DF29DCB34E0059647C /* WWFDebugProvider.swift */; };
+		0C5F54E229DCB3ED0059647C /* WWFSettingsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F54E129DCB3ED0059647C /* WWFSettingsProvider.swift */; };
 		0C7A4E0D29E6146E008AA9C7 /* AnyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7A4E0C29E6146E008AA9C7 /* AnyWrapper.swift */; };
-		0CA0CF0329DD7E84007FAAEA /* FAPMainCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */; };
-		0CA0CF0929DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0829DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift */; };
+		0CA0CF0329DD7E84007FAAEA /* WWFMainCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0229DD7E84007FAAEA /* WWFMainCollection.swift */; };
+		0CA0CF0929DD7FB3007FAAEA /* WWFIValue+BasicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0829DD7FB3007FAAEA /* WWFIValue+BasicTypes.swift */; };
 		0CA0CF0D29DD81B2007FAAEA /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF0C29DD81B2007FAAEA /* UIColor+Hex.swift */; };
-		0CA0CF1329DD89E0007FAAEA /* FAPRootCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */; };
+		0CA0CF1329DD89E0007FAAEA /* WWFRootCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1229DD89E0007FAAEA /* WWFRootCollection.swift */; };
 		0CA0CF1829DD9379007FAAEA /* LogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1729DD9379007FAAEA /* LogService.swift */; };
 		0CA0CF1D29DDB896007FAAEA /* WeakObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1C29DDB896007FAAEA /* WeakObserver.swift */; };
 		0CA0CF1F29DDBBCE007FAAEA /* String+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF1E29DDBBCE007FAAEA /* String+Helpers.swift */; };
@@ -41,37 +41,37 @@
 		0CA0CF3729DEEF39007FAAEA /* DebugEditView.Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3629DEEF39007FAAEA /* DebugEditView.Controller.swift */; };
 		0CA0CF3929DEEF4A007FAAEA /* DebugEditView.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3829DEEF4A007FAAEA /* DebugEditView.Model.swift */; };
 		0CA0CF3B29DEF4CA007FAAEA /* Error+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3A29DEF4CA007FAAEA /* Error+Debug.swift */; };
-		0CA0CF3D29DF2B94007FAAEA /* FAPMapCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */; };
+		0CA0CF3D29DF2B94007FAAEA /* WWFMapCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA0CF3C29DF2B94007FAAEA /* WWFMapCollection.swift */; };
 		0CAA72FE29DC43560077A409 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA72FD29DC43560077A409 /* AppDelegate.swift */; };
 		0CAA730729DC43570077A409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CAA730629DC43570077A409 /* Assets.xcassets */; };
 		0CAA730A29DC43570077A409 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CAA730829DC43570077A409 /* LaunchScreen.storyboard */; };
 		0CAA731429DC43AA0077A409 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA731329DC43AA0077A409 /* MainView.swift */; };
 		0CAA731629DC43BF0077A409 /* MainView.Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA731529DC43BF0077A409 /* MainView.Controller.swift */; };
-		0CAA731A29DC47460077A409 /* FAPIValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA731929DC47460077A409 /* FAPIValue.swift */; };
+		0CAA731A29DC47460077A409 /* WWFIValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA731929DC47460077A409 /* WWFIValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C5F54AD29DC56390059647C /* FAPProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPProvider.swift; sourceTree = "<group>"; };
-		0C5F54B229DC5D2C0059647C /* FAPFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPFlag.swift; sourceTree = "<group>"; };
-		0C5F54B929DC5FAF0059647C /* FAPCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPCollection.swift; sourceTree = "<group>"; };
-		0C5F54C129DC9BDA0059647C /* FAPRemoteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPRemoteProvider.swift; sourceTree = "<group>"; };
+		0C5F54AD29DC56390059647C /* WWFProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFProvider.swift; sourceTree = "<group>"; };
+		0C5F54B229DC5D2C0059647C /* WWFFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFFlag.swift; sourceTree = "<group>"; };
+		0C5F54B929DC5FAF0059647C /* WWFCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFCollection.swift; sourceTree = "<group>"; };
+		0C5F54C129DC9BDA0059647C /* WWFRemoteProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFRemoteProvider.swift; sourceTree = "<group>"; };
 		0C5F54C329DC9C900059647C /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		0C5F54C629DC9E2B0059647C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
-		0C5F54C829DC9E4F0059647C /* FAPLocalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPLocalProvider.swift; sourceTree = "<group>"; };
+		0C5F54C829DC9E4F0059647C /* WWFLocalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFLocalProvider.swift; sourceTree = "<group>"; };
 		0C5F54CD29DCA0830059647C /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		0C5F54CF29DCA3300059647C /* Configuration.Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.Collection.swift; sourceTree = "<group>"; };
 		0C5F54D129DCA34F0059647C /* Configuration.Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.Flag.swift; sourceTree = "<group>"; };
 		0C5F54D329DCA3630059647C /* Configuration.Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.Condition.swift; sourceTree = "<group>"; };
-		0C5F54D929DCAC050059647C /* FAPConditionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPConditionType.swift; sourceTree = "<group>"; };
-		0C5F54DB29DCAC470059647C /* FAPConditionResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPConditionResolver.swift; sourceTree = "<group>"; };
+		0C5F54D929DCAC050059647C /* WWFConditionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFConditionType.swift; sourceTree = "<group>"; };
+		0C5F54DB29DCAC470059647C /* WWFConditionResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFConditionResolver.swift; sourceTree = "<group>"; };
 		0C5F54DD29DCAD140059647C /* AppSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionService.swift; sourceTree = "<group>"; };
-		0C5F54DF29DCB34E0059647C /* FAPDebugProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPDebugProvider.swift; sourceTree = "<group>"; };
-		0C5F54E129DCB3ED0059647C /* FAPSettingsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPSettingsProvider.swift; sourceTree = "<group>"; };
+		0C5F54DF29DCB34E0059647C /* WWFDebugProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFDebugProvider.swift; sourceTree = "<group>"; };
+		0C5F54E129DCB3ED0059647C /* WWFSettingsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFSettingsProvider.swift; sourceTree = "<group>"; };
 		0C7A4E0C29E6146E008AA9C7 /* AnyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyWrapper.swift; sourceTree = "<group>"; };
-		0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPMainCollection.swift; sourceTree = "<group>"; };
-		0CA0CF0829DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FAPIValue+BasicTypes.swift"; sourceTree = "<group>"; };
+		0CA0CF0229DD7E84007FAAEA /* WWFMainCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFMainCollection.swift; sourceTree = "<group>"; };
+		0CA0CF0829DD7FB3007FAAEA /* WWFIValue+BasicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WWFIValue+BasicTypes.swift"; sourceTree = "<group>"; };
 		0CA0CF0C29DD81B2007FAAEA /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
-		0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPRootCollection.swift; sourceTree = "<group>"; };
+		0CA0CF1229DD89E0007FAAEA /* WWFRootCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFRootCollection.swift; sourceTree = "<group>"; };
 		0CA0CF1729DD9379007FAAEA /* LogService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogService.swift; sourceTree = "<group>"; };
 		0CA0CF1C29DDB896007FAAEA /* WeakObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakObserver.swift; sourceTree = "<group>"; };
 		0CA0CF1E29DDBBCE007FAAEA /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 		0CA0CF3629DEEF39007FAAEA /* DebugEditView.Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEditView.Controller.swift; sourceTree = "<group>"; };
 		0CA0CF3829DEEF4A007FAAEA /* DebugEditView.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugEditView.Model.swift; sourceTree = "<group>"; };
 		0CA0CF3A29DEF4CA007FAAEA /* Error+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Debug.swift"; sourceTree = "<group>"; };
-		0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPMapCollection.swift; sourceTree = "<group>"; };
+		0CA0CF3C29DF2B94007FAAEA /* WWFMapCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFMapCollection.swift; sourceTree = "<group>"; };
 		0CAA72FA29DC43560077A409 /* abdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = abdemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CAA72FD29DC43560077A409 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CAA730629DC43570077A409 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		0CAA730B29DC43570077A409 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CAA731329DC43AA0077A409 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0CAA731529DC43BF0077A409 /* MainView.Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.Controller.swift; sourceTree = "<group>"; };
-		0CAA731929DC47460077A409 /* FAPIValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAPIValue.swift; sourceTree = "<group>"; };
+		0CAA731929DC47460077A409 /* WWFIValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWFIValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +110,8 @@
 		0C5F54AB29DC56180059647C /* Flags */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CF0729DD7F98007FAAEA /* FAPValue */,
-				0C5F54B229DC5D2C0059647C /* FAPFlag.swift */,
+				0CA0CF0729DD7F98007FAAEA /* WWFValue */,
+				0C5F54B229DC5D2C0059647C /* WWFFlag.swift */,
 			);
 			path = Flags;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 		0C5F54B429DC5D650059647C /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				0C5F54AD29DC56390059647C /* FAPProvider.swift */,
+				0C5F54AD29DC56390059647C /* WWFProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -127,12 +127,12 @@
 		0C5F54B829DC5F830059647C /* Collections */ = {
 			isa = PBXGroup;
 			children = (
-				0C5F54B929DC5FAF0059647C /* FAPCollection.swift */,
+				0C5F54B929DC5FAF0059647C /* WWFCollection.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
 		};
-		0C5F54BD29DC9B8D0059647C /* FAP_Internal */ = {
+		0C5F54BD29DC9B8D0059647C /* WWF_Internal */ = {
 			isa = PBXGroup;
 			children = (
 				0C5F54D829DCABF50059647C /* Conditions */,
@@ -140,16 +140,16 @@
 				0C5F54BE29DC9B960059647C /* Providers */,
 				0CA0CEFD29DD7CDF007FAAEA /* Collections */,
 			);
-			path = FAP_Internal;
+			path = WWF_Internal;
 			sourceTree = "<group>";
 		};
 		0C5F54BE29DC9B960059647C /* Providers */ = {
 			isa = PBXGroup;
 			children = (
-				0C5F54DF29DCB34E0059647C /* FAPDebugProvider.swift */,
-				0C5F54E129DCB3ED0059647C /* FAPSettingsProvider.swift */,
-				0C5F54C129DC9BDA0059647C /* FAPRemoteProvider.swift */,
-				0C5F54C829DC9E4F0059647C /* FAPLocalProvider.swift */,
+				0C5F54DF29DCB34E0059647C /* WWFDebugProvider.swift */,
+				0C5F54E129DCB3ED0059647C /* WWFSettingsProvider.swift */,
+				0C5F54C129DC9BDA0059647C /* WWFRemoteProvider.swift */,
+				0C5F54C829DC9E4F0059647C /* WWFLocalProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -177,8 +177,8 @@
 		0C5F54D829DCABF50059647C /* Conditions */ = {
 			isa = PBXGroup;
 			children = (
-				0C5F54D929DCAC050059647C /* FAPConditionType.swift */,
-				0C5F54DB29DCAC470059647C /* FAPConditionResolver.swift */,
+				0C5F54D929DCAC050059647C /* WWFConditionType.swift */,
+				0C5F54DB29DCAC470059647C /* WWFConditionResolver.swift */,
 			);
 			path = Conditions;
 			sourceTree = "<group>";
@@ -194,20 +194,20 @@
 		0CA0CEFD29DD7CDF007FAAEA /* Collections */ = {
 			isa = PBXGroup;
 			children = (
-				0CA0CF1229DD89E0007FAAEA /* FAPRootCollection.swift */,
-				0CA0CF0229DD7E84007FAAEA /* FAPMainCollection.swift */,
-				0CA0CF3C29DF2B94007FAAEA /* FAPMapCollection.swift */,
+				0CA0CF1229DD89E0007FAAEA /* WWFRootCollection.swift */,
+				0CA0CF0229DD7E84007FAAEA /* WWFMainCollection.swift */,
+				0CA0CF3C29DF2B94007FAAEA /* WWFMapCollection.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
 		};
-		0CA0CF0729DD7F98007FAAEA /* FAPValue */ = {
+		0CA0CF0729DD7F98007FAAEA /* WWFValue */ = {
 			isa = PBXGroup;
 			children = (
-				0CAA731929DC47460077A409 /* FAPIValue.swift */,
-				0CA0CF0829DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift */,
+				0CAA731929DC47460077A409 /* WWFIValue.swift */,
+				0CA0CF0829DD7FB3007FAAEA /* WWFIValue+BasicTypes.swift */,
 			);
-			path = FAPValue;
+			path = WWFValue;
 			sourceTree = "<group>";
 		};
 		0CA0CF0A29DD81A2007FAAEA /* Extensions */ = {
@@ -304,8 +304,8 @@
 		0CAA731729DC44E00077A409 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				0CAA731829DC44E80077A409 /* FAP_Public */,
-				0C5F54BD29DC9B8D0059647C /* FAP_Internal */,
+				0CAA731829DC44E80077A409 /* WWF_Public */,
+				0C5F54BD29DC9B8D0059647C /* WWF_Internal */,
 				0C5F54DD29DCAD140059647C /* AppSessionService.swift */,
 				0C5F54C329DC9C900059647C /* APIService.swift */,
 				0CA0CF1729DD9379007FAAEA /* LogService.swift */,
@@ -313,7 +313,7 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		0CAA731829DC44E80077A409 /* FAP_Public */ = {
+		0CAA731829DC44E80077A409 /* WWF_Public */ = {
 			isa = PBXGroup;
 			children = (
 				0C7A4E0B29E61461008AA9C7 /* Helpers */,
@@ -321,7 +321,7 @@
 				0C5F54B829DC5F830059647C /* Collections */,
 				0C5F54AB29DC56180059647C /* Flags */,
 			);
-			path = FAP_Public;
+			path = WWF_Public;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,40 +398,40 @@
 				0CA0CF3729DEEF39007FAAEA /* DebugEditView.Controller.swift in Sources */,
 				0C5F54DE29DCAD140059647C /* AppSessionService.swift in Sources */,
 				0CA0CF3929DEEF4A007FAAEA /* DebugEditView.Model.swift in Sources */,
-				0CA0CF0929DD7FB3007FAAEA /* FAPIValue+BasicTypes.swift in Sources */,
+				0CA0CF0929DD7FB3007FAAEA /* WWFIValue+BasicTypes.swift in Sources */,
 				0CA0CF2629DDFCDC007FAAEA /* DebugView.Model.swift in Sources */,
 				0CA0CF3529DEEF1E007FAAEA /* DebugEditView.swift in Sources */,
 				0CA0CF0D29DD81B2007FAAEA /* UIColor+Hex.swift in Sources */,
-				0CA0CF3D29DF2B94007FAAEA /* FAPMapCollection.swift in Sources */,
+				0CA0CF3D29DF2B94007FAAEA /* WWFMapCollection.swift in Sources */,
 				0CA0CF2C29DEBFF3007FAAEA /* UIAlertController+TextField.swift in Sources */,
-				0C5F54E029DCB34E0059647C /* FAPDebugProvider.swift in Sources */,
+				0C5F54E029DCB34E0059647C /* WWFDebugProvider.swift in Sources */,
 				0C7A4E0D29E6146E008AA9C7 /* AnyWrapper.swift in Sources */,
-				0C5F54B329DC5D2C0059647C /* FAPFlag.swift in Sources */,
+				0C5F54B329DC5D2C0059647C /* WWFFlag.swift in Sources */,
 				0C5F54D029DCA3300059647C /* Configuration.Collection.swift in Sources */,
 				0C5F54D229DCA34F0059647C /* Configuration.Flag.swift in Sources */,
 				0C5F54CE29DCA0830059647C /* Configuration.swift in Sources */,
 				0CAA72FE29DC43560077A409 /* AppDelegate.swift in Sources */,
 				0CA0CF2229DDFC94007FAAEA /* DebugView.swift in Sources */,
-				0C5F54BA29DC5FAF0059647C /* FAPCollection.swift in Sources */,
+				0C5F54BA29DC5FAF0059647C /* WWFCollection.swift in Sources */,
 				0CA0CF1829DD9379007FAAEA /* LogService.swift in Sources */,
 				0CA0CF3B29DEF4CA007FAAEA /* Error+Debug.swift in Sources */,
 				0CA0CF1D29DDB896007FAAEA /* WeakObserver.swift in Sources */,
-				0CA0CF0329DD7E84007FAAEA /* FAPMainCollection.swift in Sources */,
-				0C5F54DC29DCAC470059647C /* FAPConditionResolver.swift in Sources */,
-				0C5F54AE29DC56390059647C /* FAPProvider.swift in Sources */,
-				0C5F54E229DCB3ED0059647C /* FAPSettingsProvider.swift in Sources */,
+				0CA0CF0329DD7E84007FAAEA /* WWFMainCollection.swift in Sources */,
+				0C5F54DC29DCAC470059647C /* WWFConditionResolver.swift in Sources */,
+				0C5F54AE29DC56390059647C /* WWFProvider.swift in Sources */,
+				0C5F54E229DCB3ED0059647C /* WWFSettingsProvider.swift in Sources */,
 				0CA0CF1F29DDBBCE007FAAEA /* String+Helpers.swift in Sources */,
 				0CAA731629DC43BF0077A409 /* MainView.Controller.swift in Sources */,
 				0CA0CF2429DDFCB0007FAAEA /* DebugView.Controller.swift in Sources */,
-				0C5F54C929DC9E4F0059647C /* FAPLocalProvider.swift in Sources */,
+				0C5F54C929DC9E4F0059647C /* WWFLocalProvider.swift in Sources */,
 				0CAA731429DC43AA0077A409 /* MainView.swift in Sources */,
 				0CA0CF2A29DE09E5007FAAEA /* DebugView.Cell.swift in Sources */,
-				0CAA731A29DC47460077A409 /* FAPIValue.swift in Sources */,
+				0CAA731A29DC47460077A409 /* WWFIValue.swift in Sources */,
 				0C5F54C429DC9C900059647C /* APIService.swift in Sources */,
-				0C5F54C229DC9BDA0059647C /* FAPRemoteProvider.swift in Sources */,
+				0C5F54C229DC9BDA0059647C /* WWFRemoteProvider.swift in Sources */,
 				0C5F54D429DCA3630059647C /* Configuration.Condition.swift in Sources */,
-				0C5F54DA29DCAC050059647C /* FAPConditionType.swift in Sources */,
-				0CA0CF1329DD89E0007FAAEA /* FAPRootCollection.swift in Sources */,
+				0C5F54DA29DCAC050059647C /* WWFConditionType.swift in Sources */,
+				0CA0CF1329DD89E0007FAAEA /* WWFRootCollection.swift in Sources */,
 				0CA0CF3029DEDE8F007FAAEA /* MainTextConfig.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

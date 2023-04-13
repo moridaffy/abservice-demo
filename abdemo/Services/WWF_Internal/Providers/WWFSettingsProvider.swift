@@ -1,8 +1,8 @@
 import Foundation
 
-class FAPSettingsProvider: FAPProvider {
+class WWFSettingsProvider: WWFProvider {
   private enum Constants {
-    static let cachedDebugKeyPrefix = "fap_settings_"
+    static let cachedDebugKeyPrefix = "wwf_settings_"
     static let cachedDebugListKey = "cached_settings_keys"
   }
 
@@ -19,7 +19,7 @@ class FAPSettingsProvider: FAPProvider {
   }
 }
 
-private extension FAPSettingsProvider {
+private extension WWFSettingsProvider {
   func fetchCachedValues() {
     guard let keys = userDefaults.object(forKey: Constants.cachedDebugListKey) as? [String] else { return }
 
@@ -65,7 +65,7 @@ private extension FAPSettingsProvider {
   }
 }
 
-extension FAPSettingsProvider: FAPISettableProvider {
+extension WWFSettingsProvider: WWFISettableProvider {
   @discardableResult
   func setValue<Value>(_ value: Value?, forKey key: String) -> Bool {
     self.values[key] = value
@@ -81,7 +81,7 @@ extension FAPSettingsProvider: FAPISettableProvider {
   }
 }
 
-extension FAPSettingsProvider: FAPIResettableProvider {
+extension WWFSettingsProvider: WWFIResettableProvider {
   func reset() {
     let keys = values.compactMap { $0.key }
     values.removeAll()

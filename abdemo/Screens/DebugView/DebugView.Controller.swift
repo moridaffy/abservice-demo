@@ -75,7 +75,7 @@ private extension DebugView.Controller {
     tableView.dataSource = self
   }
 
-  func handleFlagTap(key: String, value: FAPValueType) {
+  func handleFlagTap(key: String, value: WWFValueType) {
     let alert = UIAlertController(title: "Set new value", message: key, preferredStyle: .alert)
     alert.addAction(.init(title: "Cancel", style: .cancel))
 

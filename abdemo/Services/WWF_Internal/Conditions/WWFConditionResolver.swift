@@ -1,7 +1,7 @@
 import Foundation
 
-class FAPConditionResolver {
-  static let shared = FAPConditionResolver()
+class WWFConditionResolver {
+  static let shared = WWFConditionResolver()
 
   private let appSessionService: IAppSessionService
 
@@ -20,7 +20,7 @@ class FAPConditionResolver {
   }
 
   func resolve(_ condition: Configuration.Condition) -> Bool {
-    guard let conditionKey = FAPConditionType(rawValue: condition.key) else {
+    guard let conditionKey = WWFConditionType(rawValue: condition.key) else {
       // allowing unknown conditions to keep backward compatibility
       return true
     }
@@ -38,7 +38,7 @@ class FAPConditionResolver {
   }
 }
 
-private extension FAPConditionResolver {
+private extension WWFConditionResolver {
   func resolveMinAppLaunchCount(with value: Any?) -> Bool {
     guard let value = value as? Int else {
       // allowing unknown conditions to keep backward compatibility

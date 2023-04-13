@@ -12,8 +12,8 @@ struct MainTextConfig: Codable {
   }
 }
 
-extension MainTextConfig: FAPIValue {
-  init?(encoded value: FAPValueType) {
+extension MainTextConfig: WWFIValue {
+  init?(encoded value: WWFValueType) {
     switch value {
     case let .model(value):
       guard let value = value as? MainTextConfig else { return nil }
@@ -32,7 +32,7 @@ extension MainTextConfig: FAPIValue {
     }
   }
 
-  func encoded() -> FAPValueType {
+  func encoded() -> WWFValueType {
     .model(self)
   }
 }

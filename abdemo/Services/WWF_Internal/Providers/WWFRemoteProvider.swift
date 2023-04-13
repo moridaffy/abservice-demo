@@ -1,6 +1,6 @@
 import Foundation
 
-class FAPRemoteProvider: FAPProvider {
+class WWFRemoteProvider: WWFProvider {
   private enum Constants {
     static let cachedConfigKey: String = "cached_remote_config"
   }
@@ -12,14 +12,14 @@ class FAPRemoteProvider: FAPProvider {
   private let userDefaults: UserDefaults
   private let decoder: JSONDecoder
   private let encoder: JSONEncoder
-  private let resolver: FAPConditionResolver
+  private let resolver: WWFConditionResolver
 
   init(apiService: IAPIService,
        logService: ILogService,
        userDefaults: UserDefaults,
        decoder: JSONDecoder,
        encoder: JSONEncoder,
-       resolver: FAPConditionResolver) {
+       resolver: WWFConditionResolver) {
     self.apiService = apiService
     self.logService = logService
     self.userDefaults = userDefaults
@@ -39,7 +39,7 @@ class FAPRemoteProvider: FAPProvider {
   }
 }
 
-private extension FAPRemoteProvider {
+private extension WWFRemoteProvider {
   func fetchConfig(completion: (() -> Void)? = nil) {
     fetchCachedConfig()
     fetchRemoteConfig(completion: completion)

@@ -59,9 +59,9 @@ private extension DebugView.Cell {
 extension DebugView.Cell {
   class Model {
     let key: String
-    let value: FAPValueType
+    let value: WWFValueType
 
-    init(key: String, value: FAPValueType) {
+    init(key: String, value: WWFValueType) {
       self.key = key
       self.value = value
     }

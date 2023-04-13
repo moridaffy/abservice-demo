@@ -72,7 +72,7 @@ extension MainView {
       setupActions()
       setupContent()
 
-      FAPRootCollection.shared._main.subscribe(self) { [weak self] collection in
+      WWFRootCollection.shared._main.subscribe(self) { [weak self] collection in
         if let backgroundColor = UIColor(hex: collection.backgroundColor) {
           self?.view.backgroundColor = backgroundColor
         }
@@ -90,7 +90,7 @@ extension MainView {
         self?.subtitleLabel.textColor = textColor
       }
 
-      FAPRootCollection.shared.map._mapLayers.subscribe(self) { [weak self] newValue in
+      WWFRootCollection.shared.map._mapLayers.subscribe(self) { [weak self] newValue in
         var parts = ["Available map layers"]
         if newValue.isEmpty {
           parts.append("none")
@@ -158,7 +158,7 @@ private extension MainView.Controller {
   }
 
   @objc func debugMenuButtonTapped() {
-    let debugViewController = DebugView.build(collection: FAPRootCollection.shared)
+    let debugViewController = DebugView.build(collection: WWFRootCollection.shared)
     let navigationController = UINavigationController(rootViewController: debugViewController)
     present(navigationController, animated: true)
   }

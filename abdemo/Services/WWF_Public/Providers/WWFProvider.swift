@@ -2,44 +2,44 @@ import Foundation
 
 // MARK: - Protocols
 
-protocol FAPIProvider: AnyObject, FAPIObservable {
+protocol WWFIProvider: AnyObject, WWFIObservable {
   var name: String { get }
 
   func getValue<Value>(forKey key: String) -> Value?
 }
 
-protocol FAPISettableProvider: AnyObject {
+protocol WWFISettableProvider: AnyObject {
   @discardableResult
   func setValue<Value>(_ value: Value?, forKey key: String) -> Bool
 }
 
-protocol FAPIResettableProvider: AnyObject {
+protocol WWFIResettableProvider: AnyObject {
   func reset()
   func resetValue(forKey key: String)
 }
 
-protocol FAPIProviderObserver: Observer {
+protocol WWFIProviderObserver: Observer {
   func didChangeValue(key: String?)
 }
 
-protocol FAPIConfigurableWithProviders {
-  func configure(with providers: [FAPIProvider])
+protocol WWFIConfigurableWithProviders {
+  func configure(with providers: [WWFIProvider])
 }
 
-protocol FAPIObservable {
-  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?)
-  func removeObserver(_ observer: FAPIProviderObserver)
+protocol WWFIObservable {
+  func addObserver(_ observer: WWFIProviderObserver, forKey key: String?)
+  func removeObserver(_ observer: WWFIProviderObserver)
 }
 
-extension FAPIObservable {
-  func addObserver(_ observer: FAPIProviderObserver) {
+extension WWFIObservable {
+  func addObserver(_ observer: WWFIProviderObserver) {
     addObserver(observer, forKey: nil)
   }
 }
 
 // MARK: - Implementation
 
-class FAPProvider: FAPIProvider {
+class WWFProvider: WWFIProvider {
   var name: String {
     assertionFailure("Must be implemented in subclass")
     return "Default"
@@ -67,17 +67,17 @@ class FAPProvider: FAPIProvider {
   }
 }
 
-internal extension FAPProvider {
+internal extension WWFProvider {
   func notifyObservers(keys: [String]) {
     for key in keys {
-      guard let observer = observers[key]?.observer as? FAPIProviderObserver else { continue }
+      guard let observer = observers[key]?.observer as? WWFIProviderObserver else { continue }
       observer.didChangeValue(key: key)
     }
   }
 }
 
-extension FAPProvider: FAPIObservable {
-  func addObserver(_ observer: FAPIProviderObserver, forKey key: String?) {
+extension WWFProvider: WWFIObservable {
+  func addObserver(_ observer: WWFIProviderObserver, forKey key: String?) {
     guard let key = key else {
       assertionFailure()
       return
@@ -91,7 +91,7 @@ extension FAPProvider: FAPIObservable {
     observer.didChangeValue(key: key)
   }
 
-  func removeObserver(_ observer: FAPIProviderObserver) {
+  func removeObserver(_ observer: WWFIProviderObserver) {
     guard let key = observers.first(where: { $0.value.observer === observer })?.key else {
       assertionFailure()
       return
